@@ -1,0 +1,31 @@
+/* Importar Arimo desde Google Fonts para cuerpo */
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@300;400;700&display=swap');
+
+/* Importar una fuente script desde Google Fonts como fallback visual (mientras no se añadan los archivos locales)
+	Usamos "Great Vibes" para que el efecto de letra inicial script sea visible inmediatamente. */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* The Seasons - placeholder @font-face
+	The Seasons no está en Google Fonts; si tienes el archivo, añádelo a `public/fonts/` y descomenta/ajusta la ruta.
+	Ejemplo (coloca archivos en public/fonts/):
+	@font-face {
+	  font-family: 'The Seasons';
+	  src: url('/fonts/TheSeasons.woff2') format('woff2');
+	  font-weight: normal;
+	  font-style: normal;
+	  font-display: swap;
+	}
+*/
+
+/* New Icon Script - placeholder @font-face
+	Coloca el archivo NewIconScript.woff2 en public/fonts/ y descomenta/ajusta la ruta para usar exactamente esa fuente.
+	@font-face {
+	  font-family: 'New Icon Script';
+	  src: url('/fonts/NewIconScript.woff2') format('woff2');
+	  font-weight: normal;
+	  font-style: normal;
+	  font-display: swap;
+	}
+*/
+
+/* Nota: mientras no tengas archivos locales para The Seasons o New Icon Script, el CSS usará 'Great Vibes' como fallback script. */

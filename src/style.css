@@ -1,0 +1,1818 @@
+@import './styles/fonts.css';
+
+:root {
+  --font-title: 'The Seasons', serif;
+  --font-body: 'Arimo', sans-serif;
+  --font-initial: 'New Icon Script', 'Great Vibes', cursive;
+  /* Colores base (actualizados según paleta proporcionada) */
+  --color-primary: #2f302d;
+  --color-accent: #af8d44;
+  --bg: #f5f4e6;
+  --text: #2f302d;
+  /* Paleta proporcionada por el usuario: mantener nombres originales para no romper referencias */
+  --palette-deepBlue: #2f302d; /* reusado como gris oscuro */
+  --palette-deepBlue-rgb: 47,48,45;
+  --palette-ash: #ccccc2; /* gris claro */
+  --palette-cream: #f5f4e6; /* color de fondo */
+  --palette-sand: #cfc4b0; /* beige/tostado */
+  --palette-beige: #cfc4b0; /* beige/tostado (mapeado) */
+  --palette-taupe: #af8d44; /* dorado / marrón mostaza (mapeado) */
+  --navbar-height: 80px;
+
+  line-height: 1.5;
+  font-weight: 400;
+/* When JS determines the title fits on one line, add this class to prefer nowrap. */
+@media (min-width: 900px) {
+  body.page-home--prefer-nowrap .page-home .hero h1,
+  body.page-home--prefer-nowrap .page-home .hero .hero-content h1 {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important; /* if it must truncate, show ellipsis */
+  }
+}
+  color-scheme: light dark;
+  color: var(--text);
+  background-color: var(--bg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all headings use the defined TITLE font for consistency */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* apilar hero y main verticalmente */
+  align-items: stretch;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-body);
+}
+
+/* Prevent horizontal overflow caused by full-bleed tricks (100vw) */
+html, body {
+  overflow-x: hidden;
+  /* Use the cream background as the default page background so any small
+     gaps between sections blend with the areas section instead of showing
+     the dark page background. */
+  background-color: var(--palette-cream);
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-bottom: 0; /* evita hueco entre contenido y footer */
+  text-align: center;
+}
+
+/* When the hero is mounted outside #app (inserted before it), remove the
+   top padding from #app so the content sits flush under the hero. This
+   handles the renderer case where the hero is inserted as a sibling. */
+.comprar-hero + #app,
+.comprar-hero ~ #app {
+  padding-top: 0;
+}
+
+/* Hero con imagen de background que ocupa full viewport height y queda fija */
+
+.hero {
+  min-height: auto; /* allow the hero to grow naturally with its content */
+  /* full-bleed even inside a centered container */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  /* Add a subtle color overlay (10% opacity) over the background image so
+     the hero has a consistent tint, plus keep the image behind it. */
+  background-image: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.10), rgba(var(--palette-deepBlue-rgb), 0.10)), url('./assets/header-1.gif');
+  background-size: cover; /* cover mantiene proporción sin deformar, recorta lo necesario */
+  background-position: center center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: flex-end; /* colocar contenido en la parte inferior */
+  color: var(--palette-cream);
+  overflow: hidden;
+  position: relative; /* necesario para el pseudo-elemento overlay */
+}
+
+.hero-content {
+  /* ocupar todo el ancho del viewport y alinearse al borde izquierdo para que CTAs queden a la derecha */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 0 3rem 3.5rem 3rem; /* padding lateral para separación desde bordes */
+  display: grid;
+  grid-template-columns: 1fr auto; /* texto toma espacio disponible, CTAs auto-width a la derecha */
+  gap: 2rem;
+  align-items: end;
+  box-sizing: border-box;
+  position: relative; /* elevar sobre el overlay */
+  z-index: 2;
+}
+
+/* Mobile spacing tweak: give the homepage hero title more breathing room above CTAs */
+@media (max-width: 800px) {
+  .page-home .hero .hero-content h1 {
+    margin-bottom: 2.5rem; /* ~20px to separate title from hero buttons on mobile */
+    line-height: 1.2; /* slightly tighter for mobile headers */
+  }
+  .page-home .hero .hero-content {
+    padding-bottom: 2.25rem; /* reduce bottom padding so layout remains balanced */
+  }
+}
+
+/* Strong desktop overrides for homepage hero title: allow the heading to take available
+   horizontal space and prefer a single line when possible. These rules are placed late
+   and use conservative !important to ensure they win over earlier layout rules. */
+@media (min-width: 900px) {
+  .page-home .hero .hero-content {
+    /* ensure the text column can shrink/grow and prevent the auto column from forcing a narrow 1fr */
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    padding-top: calc(var(--navbar-height) + 1rem) !important; /* give extra top room for tall glyphs */
+    padding-bottom: 1.25rem !important; /* add bottom room so descenders are not clipped */
+  }
+
+  .page-home .hero h1,
+  .page-home .hero .hero-content h1 {
+    max-width: none !important;        /* remove the global 50% cap */
+    /* Default: allow wrapping. JS will add .page-home--prefer-nowrap when the title fits */
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    line-height: 1.15 !important; /* slightly increase to avoid vertical clipping of tall glyphs */
+  }
+
+  /* Give the CTA container only the space it needs so it doesn't push the title */
+  .page-home .hero .hero-cta {
+    flex: 0 0 auto !important;
+    justify-self: end !important;
+  }
+}
+
+/* Overlay degradado en la parte inferior del hero (5-10% de altura) */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 35vh; /* ajustar a 5vh o 10vh si prefieres */
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(var(--palette-deepBlue-rgb), 0.92) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 40%, rgba(var(--palette-deepBlue-rgb), 0.08) 75%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
+/* Overlay degradado en la parte superior del hero para equilibrar la iluminación */
+.hero::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 35vh; /* igual altura que ::after para simetría */
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.9) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 35%, rgba(var(--palette-deepBlue-rgb), 0.15) 65%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
+.hero h1 {
+  font-size: 4rem;
+  color: var(--palette-cream);
+  margin: 0;
+  line-height: 1.02;
+  align-self: end; /* asegurar alineamiento al fondo */
+  max-width: 50%; /* reducir ancho para dejar más espacio a la derecha */
+}
+
+.hero .hero-cta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-self: end; /* asegurar que el contenedor de botones se sitúe a la derecha de la grid */
+  align-self: end; /* asegurar que los botones queden alineados al fondo */
+}
+
+.btn-cta {
+  background: var(--palette-beige);
+  color: var(--palette-deepBlue);
+  padding: 0.9rem 1.4rem;
+  border-radius: 4px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  transition: transform 0.15s ease, background-color 120ms ease;
+  /* Slightly darken the background on hover while keeping text color */
+  background: color-mix(in srgb, var(--palette-beige) 85%, black 15%);
+}
+
+@media (max-width: 900px) {
+  .hero h1 {
+    font-size: 2.6rem; /* un poco más grande para mejor legibilidad */
+    max-width: 100%;
+    text-align: center; /* centrar para una composición más equilibrada */
+    margin-bottom: 1.2rem; /* más separación entre título y CTAs */
+
+/* Prefer single-line hero title on desktop when space allows */
+@media (min-width: 900px) {
+  .page-home .hero .hero-content h1 {
+    white-space: nowrap; /* prefer one line, allow wrapping if unavoidable */
+    overflow: hidden;
+    text-overflow: ellipsis; /* in narrow edge-cases, show ellipsis rather than wrapping */
+  }
+}
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .hero-content {
+    /* En móvil usar columna y centrar para composición más minimalista */
+    margin: 0 1rem 2.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0 1.25rem 3rem 1.25rem; /* más padding-bottom para evitar recorte de CTAs */
+  }
+  .hero .hero-cta {
+    justify-content: center;
+    display: flex;
+    flex-direction: column; /* apilar botones verticalmente */
+    width: auto;
+    gap: 1rem;
+    align-self: center; /* centrar CTAs horizontalmente dentro del hero */
+  }
+
+  /* Botones más minimalistas en móvil: menos anchos, fuente más clara y sombra sutil */
+  .hero .hero-cta .btn-cta {
+    width: auto;
+    min-width: 220px;
+    max-width: 280px; /* reducir anchura para que no parezcan demasiado grandes */
+    padding: 0.85rem 1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+    background: var(--palette-beige);
+    color: var(--palette-deepBlue);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
+
+  .hero .hero-cta .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  }
+
+  .hero {
+    background-attachment: scroll; /* mejor en móviles */
+    align-items: center; /* centrar verticalmente el contenido en móvil */
+    /* reducir altura para evitar que CTAs queden fuera en móviles y evitar solapamiento
+       con la navbar fija: usar min-height para permitir que el hero crezca si es necesario */
+    height: auto;
+    min-height: calc(70vh - var(--navbar-height));
+    padding-top: calc(var(--navbar-height) + 0.5rem);
+  }
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+
+.card {
+  padding: 2em;
+}
+
+/* Areas section debajo del hero */
+.areas-section {
+  /* Use the site map as a background and place a gradient overlay on top.
+     The overlay is the same color as the section bottom so the image is
+     hidden at the very bottom (0% up to 25%), then transitions to transparent
+     by 80% so the map image becomes progressively more visible toward the top. */
+  /* White overlay: fully opaque at bottom (no image visible), easing to 75% opacity
+     at the top so the map is slightly visible (≈25% of the image shows). */
+  background-image:
+    linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 25%, rgba(255,255,255,0.75) 100%),
+    url('./assets/map.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 4rem 0 6rem 0;
+  color: #111;
+}
+
+.trailer-section {
+  width: 100%;
+  color: #111;
+  position: relative;
+  /* create a split background: top band uses deepBlue (30% visually), the
+     lower part uses the cream. Using a large gradient keeps it responsive. */
+  /* make the blue band taller so header fits comfortably (≈50%) */
+  background-image: linear-gradient(to bottom, var(--palette-deepBlue) 0%, var(--palette-deepBlue) 50%, var(--palette-cream) 50%, var(--palette-cream) 100%);
+  padding-bottom: 0; /* evitar espacio inferior innecesario */
+}
+.trailer-head {
+  max-width: 1100px;
+  margin: 0 auto 1.25rem auto; /* reduced space below header */
+  /* add bottom padding to separate the text from the video poster below */
+  padding: 2rem 1.25rem 3rem 1.25rem; /* top right bottom left */
+  text-align: center;
+  color: var(--palette-cream);
+  position: relative;
+  z-index: 5;
+}
+.trailer-head-subtitle {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: rgba(245,244,230,0.85);
+  margin-bottom: 0.5rem;
+}
+.trailer-head-title {
+  font-family: var(--font-title);
+  font-size: 2.6rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.05;
+}
+
+@media (min-width: 1100px) {
+  .trailer-head-title {
+    font-size: 3.2rem;
+  }
+}
+.trailer-head-desc {
+  max-width: 900px;
+  margin: 0 auto 0.5rem auto;
+  color: rgba(245,244,230,0.95);
+}
+.trailer-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 0 1.25rem; /* quitar padding-bottom para que no quede franja */
+  box-sizing: border-box;
+}
+.trailer-poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: -3rem auto 1.5rem auto; /* reduced overlap so header has room */
+  z-index: 2;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  background: #000;
+  cursor: pointer;
+}
+.trailer-poster-bg {
+  display: block;
+  width: 100%;
+  /* Use an aspect-ratio box so the preview image keeps its full height
+     and doesn't get cropped. Adjust the padding-top to match the poster's
+     aspect ratio (56.25% = 16:9). */
+  padding-top: 56.25%; /* 16:9 by default */
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #000; /* fallback while loading */
+}
+.trailer-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.trailer-play .play-icon {
+  width: 0;
+  height: 0;
+  border-left: 18px solid rgba(255,255,255,0.95);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+.hero-inner,
+.comprar-hero .hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px !important; /* enforce sane max-width (use px, not vh) */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 2rem 1rem 2rem 1rem !important;
+  padding-top: calc(var(--navbar-height) + 16px) !important;
+  padding-left: 1rem !important;
+  padding-bottom: 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-height: auto !important; /* allow natural growth */
+  color: var(--palette-cream) !important;
+  font-family: var(--font-body) !important;
+}
+.trailer-video {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  background: #000;
+  outline: none;
+}
+
+@media (max-width: 900px) {
+  .trailer-wrap {
+    padding: 1.5rem 1rem 2.5rem 1rem;
+  }
+  .trailer-poster {
+    margin-top: -3.5rem;
+  }
+}
+
+/* Mobile-specific tweaks for the trailer section to preserve the half-dark/half-cream
+   composition while keeping the poster visible and readable on small screens. */
+@media (max-width: 600px) {
+  /* Make the dark band a bit taller so the text area remains fully on dark */
+  .trailer-section {
+    background-image: linear-gradient(to bottom, var(--palette-deepBlue) 0%, var(--palette-deepBlue) 60%, var(--palette-cream) 60%, var(--palette-cream) 100%);
+  }
+
+  .trailer-head {
+    /* increase bottom padding so the dark band extends further down */
+    padding: 2.5rem 1rem 6rem 1rem;
+  }
+
+  /* More spacing after the descriptive paragraph so the dark area has room
+     before the poster/video on small screens */
+  .trailer-head-desc {
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .trailer-wrap {
+    padding: 1.25rem 0.75rem 2rem 0.75rem;
+  }
+
+  /* Reduce the poster overlap so it doesn't push content off-screen on small devices */
+  .trailer-poster {
+    /* overlap the poster upward so roughly half of it sits over the dark band */
+    margin: -4rem auto 1.25rem auto;
+    max-width: calc(100% - 1rem);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+    border-radius: 10px;
+  }
+
+  /* Prefer modern aspect-ratio if available, fallback padding-top kept by default rules */
+  .trailer-poster-bg {
+    aspect-ratio: 16 / 9;
+    padding-top: 0; /* cancel legacy padding-top when aspect-ratio is used */
+    background-size: cover; /* cover gives a stronger visual presence on small screens */
+    background-position: center center;
+  }
+
+  /* Slightly smaller play control for mobile */
+  .trailer-play {
+    width: 72px;
+    height: 72px;
+    border-width: 2px;
+  }
+  .trailer-play .play-icon {
+    border-left-width: 14px;
+    border-top-width: 9px;
+    border-bottom-width: 9px;
+  }
+
+  .trailer-video {
+    max-width: calc(100% - 1rem);
+    margin: 0.25rem auto 1rem auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  /* Ensure the cream band below the trailer is visible and the transition looks smooth */
+  .areas-section {
+    padding-top: 1.5rem;
+  }
+}
+.areas-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.areas-subtitle {
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  color: var(--palette-taupe);
+  margin-bottom: 0.75rem;
+}
+.areas-title {
+  font-family: var(--font-title);
+  font-size: 2.6rem;
+  margin: 0 0 1rem 0;
+  color: #111;
+}
+.areas-desc {
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.6;
+}
+.cta-outline {
+  /* Use theme color for border and text so it remains visible over the
+     white overlay. --palette-deepBlue is the dark blue from the theme. */
+  border: 2px solid var(--palette-deepBlue);
+  color: var(--palette-deepBlue);
+  background: transparent;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Primera letra para párrafos largos con la clase .lead */
+.lead::first-letter {
+  font-family: var(--font-initial);
+  font-size: 3.6rem;
+  display: inline-block;
+  line-height: 1;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  color: inherit; /* use the same color as the heading */
+}
+
+/* Ensure headings that use .lead get the same colour as their heading text */
+.areas-title.lead::first-letter,
+.comprar-content .lead::first-letter,
+.intro-section .lead::first-letter {
+  color: var(--palette-deepBlue);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Intro section (contenido incluido en #app) - asegurar contraste sobre fondo crema */
+.intro-section {
+  /* Full-bleed section: ocupar todo el ancho del viewport aunque esté dentro de #app */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  box-sizing: border-box;
+  color: #111; /* texto oscuro y legible sobre el fondo claro */
+  padding: 0 1rem; /* padding lateral sólo; el padding vertical lo maneja .intro-inner */
+  margin-bottom: 0;
+  background: linear-gradient(rgba(245,244,230,0.65), rgba(245,244,230,0.65)), url('./assets/publish-image.jpg');
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+}
+.intro-section::before {
+  /* overlay en tonos crema/blanco (sin tinte azulado) para mejorar legibilidad */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(245,244,230,0.80) 0%, rgba(245,244,230,0.65) 30%, rgba(245,244,230,0.45) 60%, rgba(245,244,230,0.0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.intro-inner {
+  position: relative; /* elevar contenido sobre el overlay */
+  z-index: 2;
+  max-width: 1100px; /* permitir un ancho más generoso en pantallas grandes */
+  margin: 0 auto;
+  margin-top: 0 !important; /* asegurar que no haya margen superior */
+  /* remove top padding so the intro sits flush with the element above on desktop
+    keep bottom padding for breathing room */
+  padding: 0 2rem 3rem 2rem; /* top right bottom left */
+}
+.intro-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  margin-top: 0 !important; /* quitar margen superior solicitado */
+  text-align: center;
+}
+.intro-title {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+  color: #000; /* usar negro puro según solicitud */
+  font-weight: 700;
+}
+.intro-subtitle {
+  /* sincronizar exactamente con .intro-title */
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+  color: #000; /* mantener negro igual que .intro-title */
+  font-weight: 700;
+}
+.intro-text {
+  color: #333;
+  line-height: 1.7;
+  max-width: 820px;
+  margin: 0 auto 1rem auto;
+}
+.intro-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.btn-primary {
+  background: var(--palette-deepBlue);
+  color: var(--palette-cream);
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-outline {
+  background: transparent;
+  color: var(--palette-deepBlue);
+  border: 2px solid var(--palette-deepBlue);
+  padding: 0.75rem 1.3rem;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  /* Remove the top padding on mobile so the intro section sits flush
+     below previous content (no extra top gap). Keep some bottom padding. */
+  .intro-inner {
+    padding-top: 0;
+    padding-bottom: 1.25rem;
+    /* Ensure any top margin is removed (user requested margin removal, not padding) */
+    margin-top: 0 !important;
+    margin-bottom: 4.25rem !important;
+  }
+}
+
+/* Styles for the Comprar section */
+.comprar-section {
+  padding: 2rem;
+  background-color: var(--palette-cream);
+  color: var(--palette-deepBlue);
+}
+
+.comprar-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.comprar-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.comprar-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Comprar page hero */
+.comprar-hero {
+  height: auto; /* allow natural height based on content */
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--palette-cream);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: calc(var(--navbar-height) * -1); /* pull hero up under fixed navbar */
+  padding-top: 0; /* remove extra padding so background reaches the very top */
+}
+
+.comprar-hero::after {
+  /* bottom gradient overlay to create a subtle darkening near the bottom */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 35vh;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(var(--palette-deepBlue-rgb), 0.92) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 40%, rgba(var(--palette-deepBlue-rgb), 0.08) 75%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
+.comprar-hero::before {
+  /* top gradient overlay to balance lighting like the main hero */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 35vh;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.9) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 35%, rgba(var(--palette-deepBlue-rgb), 0.15) 65%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
+.comprar-hero .hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  padding: 2rem;
+  text-align: center;
+  padding-left: 6rem;
+  padding-top: calc(var(--navbar-height) + 16px);
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+    /* allow the hero to expand naturally with its content */
+  min-height: auto;
+  box-sizing: border-box;
+}
+
+/* Make the 'Explorar listados' outline button white inside the comprar hero */
+.comprar-hero .btn-outline {
+  color: #fff;
+  border-color: rgba(255,255,255,0.15);
+}
+
+@media (max-width: 800px) {
+  .comprar-hero {
+    margin-top: -64px; /* smaller navbar stacking on mobile */
+    padding-top: 64px;
+  }
+  .comprar-hero .hero-inner {
+    padding-left: 1rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Desktop: ensure comprar hero has a sensible minimum height (45% of viewport) */
+@media (min-width: 900px) {
+  .comprar-hero {
+    min-height: 45vh; /* allow growth but ensure a substantial hero on desktop */
+  }
+}
+
+/* Homepage-only hero sizing: ensure the main hero on the homepage has a larger min-height
+   on desktop without affecting heroes on other pages. The `page-home` class is added
+   to the body when the home renderer runs. */
+@media (min-width: 900px) { 
+  .page-home .hero {
+    min-height: 80vh;
+    height: auto; /* let content grow beyond this if needed */
+  }
+}
+
+.comprar-content {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  color: var(--palette-deepBlue);
+}
+
+/* Ventas specific layout helpers */
+.ventas-intro {
+  margin-bottom: 1.5rem;
+}
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin: 2rem 0;
+}
+.two-column .col.text {
+  color: var(--palette-deepBlue);
+}
+.two-column .col.media .comprar-content-bg {
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.two-column .col.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.two-column.reverse {
+  grid-template-columns: 1fr 1fr;
+}
+.two-column.reverse .col.media { order: 1; }
+.two-column.reverse .col.text { order: 2; }
+
+@media (max-width: 900px) {
+  .two-column,
+  .two-column.reverse {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .two-column .col.media .comprar-content-bg {
+    aspect-ratio: 16/9;
+    height: auto;
+  }
+}
+
+/* Remove the white overlay (the ::after gradient) only for the ventas body images
+   so they display in full color. We keep the overlay in the broader background
+   sections where it helps legibility. */
+.ventas-marketing .comprar-content-bg::after,
+.ventas-process .comprar-content-bg::after {
+  background: transparent;
+}
+
+.comprar-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.comprar-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.comprar-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+}
+
+/* Listing card components for comprar and ventas */
+.listing-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.listing-media img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+.listing-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.listing-body h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--palette-deepBlue);
+}
+.listing-body .meta {
+  color: #666;
+  font-size: 0.95rem;
+}
+.card-cta {
+  margin-top: auto;
+  text-align: right;
+}
+.card-cta .btn-outline { padding: 0.5rem 0.9rem; }
+
+@media (max-width: 700px) {
+  .comprar-images { grid-template-columns: 1fr; gap: 1rem; margin: 1rem auto; }
+  .listing-media img { height: 200px; }
+}
+
+/* Make images inside the comprar grid visually consistent */
+.comprar-images img,
+.comprar-content-bg img {
+  display: block;
+  width: 100%;
+  height: 280px; /* default thumbnail height */
+  object-fit: cover; /* crop to fill the box while preserving aspect ratio */
+  object-position: center center;
+  border-radius: 8px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+}
+
+/* Larger thumbnails on wide screens */
+@media (min-width: 1100px) {
+  .comprar-images img,
+  .comprar-content-bg img {
+    height: 360px;
+  }
+}
+
+/* Slightly taller on medium screens */
+@media (min-width: 800px) and (max-width: 1099px) {
+  .comprar-images img,
+  .comprar-content-bg img {
+    height: 320px;
+  }
+}
+
+/* Mobile: make comprar images stack and not overflow */
+@media (max-width: 700px) {
+  .comprar-images {
+    grid-template-columns: 1fr; /* stack images vertically */
+    gap: 1rem;
+    margin: 1.25rem auto;
+    padding: 0 1rem; /* small lateral padding so images never touch viewport edge */
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .comprar-content-bg {
+    border-radius: 10px;
+    overflow: hidden; /* clip images to rounded corners */
+    box-shadow: none; /* reduce heavy shadows on mobile */
+  }
+
+  /* Ensure any img inside the comprar images area is responsive and doesn't exceed its container */
+  .comprar-images img,
+  .comprar-content-bg img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; /* keep consistent visual ratio on small screens */
+    display: block;
+    object-fit: cover;
+    max-width: 100%;
+  }
+
+  /* If the images are inside figure/wrappers ensure no negative margins push them out */
+  .comprar-body,
+  .comprar-body-inner {
+    overflow: visible;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* subtle background for comprar content */
+.comprar-content-bg {
+  background-size: cover;
+  background-position: center center;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.comprar-content-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+  pointer-events: none;
+}
+
+/* Wrapper that holds both the text content and the images, with subtle background */
+.comprar-body {
+  width: 100vw; /* full-bleed */
+  margin-left: calc(50% - 50vw);
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 0 3rem 0; /* horizontal padding is handled by inner container */
+  margin-top: 0rem;
+}
+.comprar-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* slightly more transparent so the background image is more visible */
+  background: linear-gradient(to bottom, rgba(255,255,255,0.88), rgba(255,255,255,0.7));
+  pointer-events: none;
+}
+.comprar-body-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* When the comprar body immediately follows a comprar hero, remove the
+   extra top padding so there's no visual gap between them. This addresses
+   the case where the hero is mounted outside the #app or when global
+   #app padding would otherwise create a gap. */
+.comprar-hero + .comprar-body {
+  padding-top: 0;
+  margin-top: 0; /* ensure no extra top margin */
+}
+.comprar-body-inner > .comprar-content-inner,
+.comprar-body-inner > .comprar-images {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== CONTACT PAGE STYLES ===== */
+
+.contact-content {
+  max-width: 100%;
+}
+
+.contact-info-section {
+  margin: 3rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-details {
+  background: #fff;
+  padding: 3.25rem 2.25rem 2.25rem; /* more top padding so the header breathes */
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(47,48,45,0.06);
+  max-width: 980px;
+  width: 100%;
+}
+
+/* Contact values section (replaces small gallery images) */
+.contact-values {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.contact-values h3 {
+  font-family: var(--font-title);
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  text-align: left;
+}
+
+.contact-values p {
+  color: rgba(47,48,45,0.9);
+  margin-bottom: 1.25rem;
+  max-width: 800px;
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.value-card {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid rgba(47,48,45,0.06);
+  /* dejar espacio extra a la izquierda para la barra decorativa */
+  padding: 1.25rem 1rem 1.25rem 1.75rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(47,48,45,0.04);
+  overflow: visible;
+}
+
+.value-icon {
+  /* ocultamos el emoji/icono textual: ahora usamos una barra decorativa a la izquierda
+     Si en el futuro queremos un icono SVG, reactivar y ajustar estilos. */
+  display: none;
+}
+
+/* barra decorativa elegante en el lateral izquierdo de la tarjeta */
+.value-card::before {
+  content: "";
+  position: absolute;
+  left: 12px; /* distancia desde el borde del contenedor */
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  border-radius: 6px;
+  /* estado por defecto: sutil, neutro, para no competir con el contenido */
+  background: rgba(47,48,45,0.06);
+  box-shadow: none;
+  transition: background 220ms ease, width 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+  transform-origin: left center;
+}
+
+.value-card:hover::before {
+  /* al hover activamos el degradado dorado y una ligera expansión */
+  background: linear-gradient(180deg, var(--color-accent), rgba(175,141,68,0.95));
+  box-shadow: 0 6px 18px rgba(175,141,68,0.12);
+  width: 8px;
+}
+
+.value-card {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(47,48,45,0.06);
+}
+.value-body h4 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.05rem;
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  text-align: center; /* centrar el título dentro del contenedor de texto */
+}
+.value-body p {
+  margin: 0;
+  color: rgba(47,48,45,0.85);
+  line-height: 1.6;
+}
+
+@media (min-width: 900px) {
+  .values-list {
+    flex-direction: row;
+  }
+  .value-card {
+    flex: 1 1 0;
+  }
+}
+
+.contact-details h3 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  font-size: 2.25rem;
+  text-align: center;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+  position: relative;
+  padding-top: 0.25rem;
+}
+
+.contact-details h3::after {
+  content: '';
+  display: block;
+  width: 84px;
+  height: 6px;
+  margin: 0.75rem auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(175,141,68,0.95), rgba(175,141,68,0.7));
+  box-shadow: 0 6px 14px rgba(175,141,68,0.08);
+}
+
+.contact-items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  align-items: start;
+}
+
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: #fff;
+  /* dejar espacio extra a la izquierda para la barra decorativa */
+  padding: 1rem 1.25rem 1rem 1.75rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(47,48,45,0.04);
+  /* usar un borde sutil por defecto para permitir transición al dorado */
+  border: 1px solid rgba(47,48,45,0.04);
+  transition: transform 190ms ease, box-shadow 190ms ease, border-color 190ms ease;
+  position: relative; /* necesario para posicionar la barra ::before */
+  overflow: visible;
+}
+
+.contact-item:hover {
+  transform: translateY(-6px);
+  /* sombra principal y sombra dorada sutil */
+  box-shadow: 0 18px 40px rgba(47,48,45,0.07), 0 6px 18px rgba(175,141,68,0.12);
+  /* borde dorado para remarcar */
+  border-color: var(--color-accent);
+}
+
+/* accesibilidad: aplicar mismo estilo cuando un elemento interno recibe foco */
+.contact-item:focus-within,
+.contact-item:active {
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 34px rgba(175,141,68,0.10), 0 6px 18px rgba(47,48,45,0.04);
+  transform: translateY(-3px);
+}
+
+/* barra decorativa izquierda en cada contacto, igual que en .value-card */
+.contact-item::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  border-radius: 6px;
+  background: rgba(47,48,45,0.06);
+  box-shadow: none;
+  transition: background 220ms ease, width 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+  transform-origin: left center;
+}
+
+.contact-item:hover::before {
+  background: linear-gradient(180deg, var(--color-accent), rgba(175,141,68,0.95));
+  box-shadow: 0 6px 18px rgba(175,141,68,0.12);
+  width: 8px;
+}
+
+.contact-item:focus-within::before,
+.contact-item:active::before {
+  background: linear-gradient(180deg, var(--color-accent), rgba(175,141,68,0.9));
+  box-shadow: 0 6px 18px rgba(175,141,68,0.12);
+  width: 8px;
+}
+
+.contact-icon {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--palette-cream), #fff);
+  border: 1px solid rgba(47,48,45,0.04);
+  /* force monochrome icons: use currentColor for SVG fill and set color to black */
+  color: #000;
+  font-size: 1.25rem;
+  box-shadow: 0 6px 14px rgba(47,48,45,0.03);
+}
+
+.contact-icon svg {
+  width: 34px;
+  height: 34px;
+  display: block;
+  fill: currentColor;
+}
+
+.contact-text {
+  /* make the text column take available space and center its contents */
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.contact-text p,
+.contact-text a {
+  width: 100%;
+}
+
+.value-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.contact-text h4 {
+  margin: 0 0 0.35rem 0;
+  color: var(--color-primary);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center; /* centrar títulos en las value-cards */
+}
+.contact-text p {
+  margin: 0;
+  color: rgba(47,48,45,0.9);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.contact-text a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.contact-text a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .contact-items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Increase left padding on contact items for small/medium screens so the
+     decorative left bar (::before) doesn't appear cramped against the text.
+     This covers more devices (phones and small tablets) than the 480px rule. */
+  .contact-item {
+    padding-left: 3rem; /* ~48px to give a comfortable gap */
+    gap: 1rem;
+  }
+
+  .contact-text {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* Mobile tweaks: give more breathing room between the left decorative bar
+   and the content of each contact card, and make the text align left for
+   better readability on narrow screens. */
+@media (max-width: 480px) {
+  .contact-item {
+    /* increase left padding so the bar (::before) doesn't feel cramped */
+    padding-left: 2.75rem; /* ~44px */
+    gap: 1rem;
+  }
+
+  .contact-text {
+    /* align text to the left and let it occupy the normal flow */
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* make the icon stay visually separated from the text on very small screens */
+  .contact-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+.contact-gallery {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.contact-gallery h3 {
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  font-size: 2rem;
+}
+
+.contact-gallery p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: var(--text);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gallery-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(47, 48, 45, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(47, 48, 45, 0.2);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(47, 48, 45, 0.9));
+  color: white;
+  padding: 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-overlay h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.gallery-overlay p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: white;
+}
+
+/* Mobile styles for contact page */
+@media (max-width: 768px) {
+  .contact-info-section {
+    margin: 2rem 0;
+  }
+
+  .contact-details {
+    padding: 2rem;
+    margin: 0 1rem;
+  }
+
+  .contact-details h3 {
+    font-size: 1.6rem;
+  }
+
+  .contact-items-grid {
+
+/* Homepage-specific override: allow the H1 to use more width on desktop so it doesn't wrap
+   into multiple lines unnecessarily. This unsets the global 50% cap for the homepage. */
+@media (min-width: 900px) {
+  .page-home .hero h1 {
+    max-width: none; /* allow title to expand across available space */
+    white-space: nowrap; /* prefer a single line */
+    word-break: normal;
+    hyphens: none;
+  }
+}
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-item {
+    padding: 1.25rem;
+  }
+
+  .gallery-images {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .gallery-item img {
+    height: 200px;
+  }
+
+  .gallery-overlay {
+    transform: translateY(0);
+    background: rgba(47, 48, 45, 0.8);
+  }
+
+  .contact-gallery h3 {
+    font-size: 1.6rem;
+  }
+
+  .contact-gallery p {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .contact-items-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== ABOUT PAGE STYLES ===== */
+
+.about-content {
+  max-width: 100%;
+}
+
+/* Remove white background overlay for about page */
+.about-content .comprar-body-inner {
+  background: transparent;
+  box-shadow: none;
+}
+
+.about-content .comprar-body::before {
+  display: none;
+}
+
+/* Remove white overlay from images in about page */
+.about-content .comprar-content-bg::after {
+  display: none;
+}
+
+.about-content .comprar-content-bg {
+  box-shadow: none;
+}
+
+.about-intro {
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+
+.about-intro h2 {
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  font-size: 2.6rem;
+  letter-spacing: 0.4px;
+  line-height: 1.05;
+}
+
+.about-intro p {
+  font-size: 1.05rem;
+  color: rgba(47,48,45,0.88);
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.8;
+  opacity: 0.95;
+}
+
+.about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin: 3.5rem 0;
+}
+
+/* Desktop: make the two team cards narrower and centered so they look more square */
+@media (min-width: 1100px) {
+  .about-team-grid {
+    grid-template-columns: 30% 30%;
+    justify-content: center; /* center the two columns within the container */
+    gap: 4rem;
+  }
+  .about-team-grid .team-member {
+    max-width: 520px; /* keep cards from getting overly wide */
+    margin: 0 auto; /* center each card within its grid cell */
+  }
+}
+
+.team-member {
+  text-align: center;
+  background: #fff;
+  padding: 1.75rem 1.5rem;
+  border-radius: 14px;
+  border: 1px solid rgba(47,48,45,0.06);
+  box-shadow: 0 10px 24px rgba(47, 48, 45, 0.06);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(47, 48, 45, 0.09);
+}
+
+.team-member h3 {
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.member-image {
+  margin-bottom: 1.25rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(47, 48, 45, 0.06);
+}
+
+/* Make team images behave like document/portrait photos so heads are visible */
+.member-image img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  height: auto;
+  object-fit: cover; /* crop consistently for a polished card */
+  object-position: center top;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .member-image img {
+    height: 260px; /* smaller portrait on mobile */
+  }
+}
+
+.member-description {
+  text-align: left;
+}
+
+.member-description p {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.member-description .note {
+  font-style: italic;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.about-mission {
+  margin: 4rem 0;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(249,247,243,0.98));
+  padding: 3.25rem 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(47, 48, 45, 0.06);
+  position: relative;
+}
+
+.about-mission::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(175,141,68,0.5));
+  border-radius: 2px;
+}
+
+.about-mission h3 {
+  color: var(--color-primary);
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.mission-lead {
+  font-size: 1.08rem;
+  color: rgba(47,48,45,0.9);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  position: relative;
+}
+
+.mission-lead::first-letter {
+  /* Match the other large initial letter: use the script/title font, larger size and black color */
+  font-family: var(--font-initial);
+  font-size: 4rem;
+  line-height: 1;
+  margin-right: 0.8rem;
+  vertical-align: middle;
+  color: #000; /* black as requested */
+  float: left;
+  margin-top: 0.1rem;
+}
+
+/* Final override: when JS detects the H1 really overflows on desktop, remove ellipsis and allow
+   natural wrapping (preserving whole words). This block is intentionally at the end to win
+   over earlier rules and uses !important to be robust against previous declarations. */
+@media (min-width: 900px) {
+  body.page-home--allow-wrap .page-home .hero h1,
+  body.page-home--allow-wrap .page-home .hero .hero-content h1 {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+    hyphens: none !important;
+    max-width: none !important;
+  }
+}
+
+.mission-sub {
+  font-size: 1.1rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 0;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Mobile styles for about page */
+@media (max-width: 768px) {
+  .about-intro h2 {
+    font-size: 1.8rem;
+  }
+
+  .about-intro p {
+    font-size: 1rem;
+  }
+
+  .about-team-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .team-member {
+    padding: 1.5rem;
+  }
+
+  .team-member h3 {
+    font-size: 1.5rem;
+  }
+
+  .member-image img {
+    height: 250px;
+    aspect-ratio: 3/4;
+  }
+
+  .about-mission {
+    margin: 2.5rem 0;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .about-mission h3 {
+    font-size: 1.8rem;
+  }
+
+  .mission-lead {
+    font-size: 1.1rem;
+  }
+
+  .mission-lead::first-letter {
+    font-size: 3rem;
+    margin-right: 0.6rem;
+  }
+
+  .mission-sub {
+    font-size: 1rem;
+  }
+}
+

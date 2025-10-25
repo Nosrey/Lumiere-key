@@ -1,0 +1,268 @@
+/* Page-specific styles for ventas
+   Makes the "ventas-marketing" section full-bleed and centers the text
+*/
+.site-container {
+  /* Reusable centered container used across pages */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ventas-marketing {
+  /* Use normal centered flow instead of forcing full-bleed (avoids 100vw scrollbar shifts)
+     If you need a background that spans the full viewport, apply a separate wrapper element. */
+  padding: 3rem 0; /* normal vertical spacing */
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.ventas-marketing .col.text.full-width {
+  /* Use the reusable container rules so layout is consistent with the rest of the site */
+  max-width: 1280px;
+  margin: 0 auto;
+  /* For now remove horizontal padding so the text is "pegado" to the container edges */
+  padding: 0;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* keep inner column tight; spacing between blocks comes from the container gap */
+.ventas-marketing .col.text.full-width {
+  padding-bottom: 0;
+}
+
+/* Make the marketing heading feel more like a page title and use the site's title font */
+.ventas-marketing .col.text.full-width h3 {
+  font-family: var(--font-title);
+  font-size: 2.2rem; /* slightly larger to read as a section title */
+  line-height: 1.05;
+  /* Remove vertical gap so heading sits tight against following paragraph */
+  margin: 0;
+  font-weight: 600;
+  color: var(--palette-deepBlue);
+  letter-spacing: 0.2px;
+}
+
+@media (min-width: 900px) {
+  .ventas-marketing .col.text.full-width h3 {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .ventas-marketing {
+    padding: 2rem 1rem;
+  }
+  .ventas-marketing .col.text.full-width {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Constrain paragraph width for readable lines and prevent horizontal overflow
+   while keeping zero vertical spacing between elements */
+.ventas-marketing .col.text.full-width p {
+  /* Make the paragraph use the full available width and be tightly stacked */
+  margin: 0;
+  padding: 0;
+  max-width: none; /* allow full width */
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  overflow-wrap: break-word; /* prevent long words from overflowing horizontally */
+  word-break: normal;
+  hyphens: auto;
+}
+
+/* Avoid accidental horizontal scroll from full-bleed section on some OS/scrollbar combos */
+.ventas-marketing {
+  overflow-x: hidden;
+}
+
+/* Ensure the ventas-marketing section has a normal external separation
+   from the next block. We keep this small and non-redundant so gap remains
+   the single source of truth but this guarantees spacing when DOM nesting
+   prevents gap from applying. */
+.ventas-marketing {
+  margin-bottom: 2rem !important;
+  padding-bottom: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .ventas-marketing {
+    margin-bottom: 2rem !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Remove redundant spacing so only the container gap defines vertical space.
+   This prevents doubled spacing when both gap and explicit paddings/margins
+   were applied. We keep gap on .comprar-body-inner as the single source of truth. */
+.comprar-body-inner .ventas-listings {
+  padding-top: 0 !important;
+}
+
+
+/* Styles for the stacked listing image to remain inside the page container */
+.comprar-images {
+  display: block;
+  width: 100%;
+  margin: 2.25rem 0 3rem 0; /* normal vertical spacing from surrounding content */
+  box-sizing: border-box;
+}
+
+/* Make the image fill the comprar-body-inner width (no small side gaps) */
+.comprar-image-block {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.comprar-image-block {
+  /* Minimal, predictable wrapper for the listing image. JS will set
+     the exact width to match the inner container when necessary. */
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 1rem;
+}
+
+.comprar-image-large {
+  display: block;
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 8px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+}
+
+@media (min-width: 900px) {
+  .ventas-listings h3 {
+    font-size: 1.8rem;
+  }
+  .ventas-listings p {
+    font-size: 1.05rem;
+  }
+}
+
+/* === Normalize vertical spacing for ventas page ===
+   Remove vertical margins and paddings between sections so elements stack
+   without vertical gaps. This targets only elements inside the comprar-body-inner
+   produced by ventas.ts to avoid affecting other pages. */
+.comprar-body-inner > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.comprar-body-inner section,
+.comprar-body-inner .ventas-intro,
+.comprar-body-inner .ventas-marketing,
+.comprar-body-inner .ventas-process,
+.comprar-body-inner .ventas-listings,
+.comprar-body-inner .comprar-images {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Remove any vertical margins/paddings from all descendants within comprar-body-inner
+   This ensures paragraphs, headings, lists, blockquotes, figures, etc. do not add
+   vertical spacing. Use with care (we specifically target the ventas page container). */
+.comprar-body-inner * {
+  margin-block: 0 !important;
+  padding-block: 0 !important;
+}
+
+/* Add a uniform vertical gap between the direct children (blocks) of the page
+   container. We use gap on a column flex layout so every block (bloque 1..5)
+   receives the same vertical spacing, while inner element margins remain removed.
+   Adjust the value (2.5rem) if you want larger/smaller gaps. */
+.comprar-body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* normal gap between blocks */
+  /* Ensure children stretch to container width as before */
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .comprar-body-inner {
+    gap: 3rem; /* larger gap on small screens (mobile) */
+  }
+}
+
+/* Ensure the listings block has a top spacing in case it's not a direct child
+   of .comprar-body-inner or other rules collapse the gap. This restores visual
+   separation specifically before the "Listado recientemente por Lumiere Key" block. */
+.comprar-body-inner .ventas-listings {
+  padding-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .comprar-body-inner .ventas-listings {
+    padding-top: 0 !important;
+  }
+}
+
+/* Ensure the text column inside ventas-marketing has no vertical gaps */
+.ventas-marketing .col.text.full-width {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Final override: guarantee normal spacing after the ventas-marketing section
+   even though we reset many inner margins earlier. This selector is specific
+   and placed at the end so it wins over broad resets. */
+.comprar-body-inner > .ventas-marketing,
+.comprar-body-inner > .ventas-marketing .col.text.full-width,
+.ventas-marketing {
+  margin-bottom: 2rem !important;
+}
+
+@media (max-width: 900px) {
+  .comprar-body-inner > .ventas-marketing,
+  .comprar-body-inner > .ventas-marketing .col.text.full-width,
+  .ventas-marketing {
+    margin-bottom: 2rem !important;
+  }
+}
+
+/* Ensure blocks inside the main content (.comprar-content-inner) also get
+   a consistent gap: add top margin to any block that follows another. This
+   handles the sections declared in `ventas.ts` (ventas-intro, ventas-marketing,
+   ventas-process, ventas-listings). */
+.comprar-body-inner > .comprar-content-inner > * + * {
+  margin-top: 2rem !important;
+}
+
+@media (max-width: 900px) {
+  .comprar-body-inner > .comprar-content-inner > * + * {
+    margin-top: 3rem !important;
+  }
+}
+
+/* Apply a single uniform vertical gap between blocks by adding a top
+   margin to every block that follows another. This avoids double spacing
+   when both previous/next blocks had margins. */
+.comprar-body-inner > * + * {
+  margin-top: 2rem !important;
+}
+
+@media (max-width: 900px) {
+  .comprar-body-inner > * + * {
+    margin-top: 3rem !important;
+  }
+}
+
+/* Ensure no trailing bottom margin and keep inner padding reset */
+.comprar-body-inner > *:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+

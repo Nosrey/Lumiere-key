@@ -1,0 +1,96 @@
+/* Modal básico reutilizable */
+.lk-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+.lk-modal {
+  position: relative; /* important: contain absolute children like the close button */
+  background: var(--palette-cream);
+  color: var(--text);
+  max-width: 1000px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  z-index: 2001; /* sit above the backdrop */
+  overflow: visible; /* allow the close button to be visible if positioned near edges */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.lk-modal .modal-media {
+  background: #000;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* clip the image to the rounded corners */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.lk-modal .modal-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.lk-modal .modal-body {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-body);
+}
+.lk-modal .modal-body h2 {
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: #000;
+  font-weight: 700;
+}
+.lk-modal .modal-body p {
+  color: #333;
+  line-height: 1.6;
+}
+.lk-modal .modal-close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  background: #000; /* black circular button */
+  border: 1.5px solid rgba(255,255,255,0.06);
+  color: #fff; /* white X */
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px; /* soft rounded square */
+  z-index: 10001;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+/* Make sure the close button is visible on small screens */
+@media (max-width: 800px) {
+  .lk-modal .modal-close {
+    right: 0.6rem;
+    top: 0.6rem;
+    width: 34px;
+    height: 34px;
+    font-size: 1.05rem;
+    background: #000;
+  }
+}
+
+/* Responsive: en móvil la modal será vertical y la imagen arriba */
+@media (max-width: 800px) {
+  .lk-modal {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
+  .lk-modal .modal-media { min-height: 200px; }
+}
