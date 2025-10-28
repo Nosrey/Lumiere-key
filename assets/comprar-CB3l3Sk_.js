@@ -1,4 +1,4 @@
-import{o as y,r as h,a as f}from"./Footer-C2V_G5tZ.js";/* empty css              */const L="/Lumiere-key/assets/buys-hero-2zdr3T3d.jpg",C="/Lumiere-key/assets/buys-body-2-EsBlwMxj.jpeg",E="/Lumiere-key/assets/image-1-CccbALsx.jpeg",l="/Lumiere-key/assets/image-3-Da5xnIfQ.jpeg",j="/Lumiere-key/assets/buys-background-CWlf-FER.jpg";function N(e,b=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${L}')`,a.id="buy",a.innerHTML=`
+import{o as y,r as h,a as f}from"./Footer-Cr0BdTaO.js";/* empty css              */const L="/Lumiere-key/assets/buys-hero-2zdr3T3d.jpg",C="/Lumiere-key/assets/buys-body-2-EsBlwMxj.jpeg",E="/Lumiere-key/assets/image-1-CccbALsx.jpeg",l="/Lumiere-key/assets/image-3-Da5xnIfQ.jpeg",j="/Lumiere-key/assets/buys-background-CWlf-FER.jpg";function N(e,b=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${L}')`,a.id="buy",a.innerHTML=`
     <div class="hero-inner">
       <h1>¿Sueña con tener una propiedad en Zaragoza?</h1>
       <p class="hero-sub">Nuestras propiedades de lujo y residencias exclusivas te esperan.</p>

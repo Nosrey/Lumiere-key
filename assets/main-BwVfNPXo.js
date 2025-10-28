@@ -1,4 +1,4 @@
-import{r as u,a as v}from"./Footer-C2V_G5tZ.js";function b(e){try{document.body.classList.add("page-home")}catch{}e.innerHTML=`
+import{r as u,a as v}from"./Footer-Cr0BdTaO.js";function b(e){try{document.body.classList.add("page-home")}catch{}e.innerHTML=`
     <section class="intro-section">
       <div class="intro-inner container text-justify">
   <h2 class="intro-title">Proceso de publicación</h2>

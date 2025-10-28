@@ -1,4 +1,4 @@
-import{r as d,a as m}from"./Footer-C2V_G5tZ.js";/* empty css              */const u="/Lumiere-key/assets/image-1-CccbALsx.jpeg",l="/Lumiere-key/assets/image-2-BhAbLFGZ.jpeg",p="/Lumiere-key/assets/image-3-BIMkz29N.jpeg",b="/Lumiere-key/assets/image-3-BIMkz29N.jpeg";function v(e,c=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${u}')`,a.id="about-hero",a.innerHTML=`
+import{r as d,a as m}from"./Footer-Cr0BdTaO.js";/* empty css              */const u="/Lumiere-key/assets/image-1-CccbALsx.jpeg",l="/Lumiere-key/assets/image-2-BhAbLFGZ.jpeg",p="/Lumiere-key/assets/image-3-BIMkz29N.jpeg",b="/Lumiere-key/assets/image-3-BIMkz29N.jpeg";function v(e,c=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${u}')`,a.id="about-hero",a.innerHTML=`
     <div class="hero-inner">
       <h1>Sobre nosotros</h1>
       <p class="hero-sub">Lumiere Key nace de la unión entre dos caminos, el arte y la empresa. Dos emprendedores que decidimos crear una inmobiliaria, un camino iluminado hacia tu hogar.</p>
