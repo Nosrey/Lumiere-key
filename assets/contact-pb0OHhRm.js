@@ -1,4 +1,4 @@
-import{r as l,a as d}from"./Footer-CmTGjNd8.js";/* empty css              */const h="/Lumiere-key/assets/image-1-CccbALsx.jpeg",u="/Lumiere-key/assets/image-2-DU3sQlZs.jpeg";function p(e,s=!1){e.innerHTML="";const o=document.createElement("section");o.className="comprar-hero",o.style.backgroundImage=`url('${h}')`,o.id="contact-hero",o.innerHTML=`
+import{r as l,a as d}from"./Footer-C2V_G5tZ.js";/* empty css              */const h="/Lumiere-key/assets/image-1-CccbALsx.jpeg",u="/Lumiere-key/assets/image-2-DU3sQlZs.jpeg";function p(e,s=!1){e.innerHTML="";const o=document.createElement("section");o.className="comprar-hero",o.style.backgroundImage=`url('${h}')`,o.id="contact-hero",o.innerHTML=`
     <div class="hero-inner">
       <h1>Contacto</h1>
       <p class="hero-sub">Explorar el mercado inmobiliario en Aragón puede resultar todo un reto, pero nuestro equipo profesional está preparado para hacer que su búsqueda sea sencilla y sin complicaciones.</p>
@@ -6,7 +6,7 @@ import{r as l,a as d}from"./Footer-CmTGjNd8.js";/* empty css              */cons
         <button class="btn-primary contact-button" onclick="document.querySelector('.contact-info-section').scrollIntoView({behavior: 'smooth'})">Contáctanos ahora</button>
       </div>
     </div>
-  `;const t=document.createElement("section");t.className="comprar-body",t.style.backgroundImage=`url('${u}')`;const a=document.createElement("div");a.className="container comprar-body-inner";const r=document.createElement("div");r.className="comprar-content-inner contact-content",r.innerHTML=`
+  `;const t=document.createElement("section");t.className="comprar-body",t.style.backgroundImage=`url('${u}')`;const a=document.createElement("div");a.className="container comprar-body-inner";const n=document.createElement("div");n.className="comprar-content-inner contact-content text-justify",n.innerHTML=`
     <section class="contact-intro">
       <h2 class="lead">Su tranquilidad es nuestra prioridad</h2>
       <p>Nos dedicamos a acompañarle en cada etapa del proceso, garantizando que encuentre la propiedad ideal de forma segura y con total confianza. ¡Contáctenos y nos comunicaremos con usted lo antes posible!</p>
@@ -42,7 +42,7 @@ import{r as l,a as d}from"./Footer-CmTGjNd8.js";/* empty css              */cons
               </svg>
             </div>
             <div class="contact-text">
-              <h4>Teléfono</h4>
+              <h4>Teléfono Kevin</h4>
               <p><a href="tel:+34624415165">+34 624 41 51 65</a></p>
             </div>
           </div>
@@ -99,4 +99,4 @@ import{r as l,a as d}from"./Footer-CmTGjNd8.js";/* empty css              */cons
         </article>
       </div>
     </section>
-  `,a.appendChild(r),t.appendChild(a),s&&e.parentNode?e.parentNode.insertBefore(o,e):e.appendChild(o),e.appendChild(t)}const n=document.createElement("div");n.id="navbar-container";document.body.insertBefore(n,document.body.firstChild);l(n);const c=document.getElementById("app");c&&p(c,!0);const i=document.createElement("div");i.id="footer-container";document.body.appendChild(i);d(i);
+  `,a.appendChild(n),t.appendChild(a),s&&e.parentNode?e.parentNode.insertBefore(o,e):e.appendChild(o),e.appendChild(t)}const r=document.createElement("div");r.id="navbar-container";document.body.insertBefore(r,document.body.firstChild);l(r);const c=document.getElementById("app");c&&p(c,!0);const i=document.createElement("div");i.id="footer-container";document.body.appendChild(i);d(i);
