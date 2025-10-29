@@ -1,4 +1,4 @@
-import{r as m,a as u}from"./Footer-Bdk3HLlM.js";/* empty css              */const o="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",v="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",b="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",r="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",g="/Lumiere-key/assets/ventas-5-Bpgl46GU.jpg";function y(e,p=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${o}')`,a.id="ventas-hero",a.innerHTML=`
+import{r as m,a as u}from"./Footer-DMdW5SUs.js";/* empty css              */const o="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",v="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",b="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",r="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",g="/Lumiere-key/assets/ventas-5-Bpgl46GU.jpg";function y(e,p=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${o}')`,a.id="ventas-hero",a.innerHTML=`
     <div class="hero-inner">
       <h1>Venda su propiedad con Lumiere Key</h1>
       <p class="hero-sub">Sabemos que vender su hogar es una decisión importante. Permítanos acompañarle.</p>
