@@ -42,8 +42,8 @@ import{r as l,a as d}from"./Footer-28mFYU8r.js";/* empty css              */cons
               </svg>
             </div>
             <div class="contact-text">
-              <h4>Teléfono Kevin</h4>
-              <p><a href="tel:+34624415165">+34 624 41 51 65</a></p>
+              <h4>Teléfono</h4>
+              <p><a href="tel:+34624415165">+34 624 41 51 65 - Kevin Leyva</a></p>
             </div>
           </div>
           <div class="contact-item">
