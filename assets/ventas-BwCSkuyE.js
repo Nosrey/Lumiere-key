@@ -1,22 +1,21 @@
-import{r as C,a as E}from"./Footer-Cr0BdTaO.js";/* empty css              */const u="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",j="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",k="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",d="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",z="/Lumiere-key/assets/ventas-5-Bpgl46GU.jpg";function q(e,y=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${u}')`,a.id="ventas-hero",a.innerHTML=`
+import{r as m,a as u}from"./Footer-Bdk3HLlM.js";/* empty css              */const o="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",v="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",b="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",r="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",g="/Lumiere-key/assets/ventas-5-Bpgl46GU.jpg";function y(e,p=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${o}')`,a.id="ventas-hero",a.innerHTML=`
     <div class="hero-inner">
-      <h1>Vender su propiedad con Lumiere Key</h1>
-      <p class="hero-sub">Sabemos que vender tu hogar es una decisión importante. Permítanos acompañarle.</p>
+      <h1>Venda su propiedad con Lumiere Key</h1>
+      <p class="hero-sub">Sabemos que vender su hogar es una decisión importante. Permítanos acompañarle.</p>
       <div class="hero-cta">
         <button class="btn-primary contact-button">Contactar</button>
         <button class="btn-outline">Solicitar valoración</button>
       </div>
     </div>
-  `;const n=document.createElement("section");n.className="comprar-body",n.style.backgroundImage=`url('${d}')`;const s=document.createElement("div");s.className="container comprar-body-inner";const l=document.createElement("div");l.className="comprar-content-inner text-justify",l.innerHTML=`
+  `;const s=document.createElement("section");s.className="comprar-body",s.style.backgroundImage=`url('${r}')`;const t=document.createElement("div");t.className="container comprar-body-inner";const i=document.createElement("div");i.className="comprar-content-inner text-justify",i.innerHTML=`
     <section class="ventas-intro">
-      <h2 class="lead">Sabemos que vender tu hogar es una decisión importante</h2>
-      <p>El siguiente paso consiste en elegir la agencia adecuada para representar tu propiedad. Aunque pueda parecer razonable trabajar con varios agentes a la vez, te invitamos a considerar lo siguiente: sin una agencia verdaderamente comprometida con tu éxito, ¿tu propiedad recibirá la atención exclusiva y el cuidado personalizado que realmente merece?</p>
+      <h2 class="lead">Sabemos que vender su hogar es una decisión importante</h2>
+      <p>El siguiente paso consiste en elegir la agencia adecuada para representar su propiedad. Aunque pueda parecer razonable trabajar con varios agentes a la vez, le invitamos a considerar lo siguiente: sin una agencia verdaderamente comprometida con su éxito, ¿su propiedad recibirá la atención exclusiva y el cuidado personalizado que realmente merece?</p>
     </section>
 
     <section class="ventas-marketing">
       <div class="col text full-width">
         <h3>¡Nuestro marketing!</h3>
-        <p>En Lumiere Key, la colaboración es la esencia de todo lo que hacemos. Estamos convencidos de que, cuando los equipos trabajan en perfecta sintonía, los resultados son extraordinarios. Nuestro enfoque coordinado garantiza que los departamentos de marketing y ventas actúen de la mano, creando una estrategia integral pensada para mostrar su hogar en su mejor versión.</p>
       </div>
     </section>
 
@@ -25,21 +24,21 @@ import{r as C,a as E}from"./Footer-Cr0BdTaO.js";/* empty css              */cons
         <div class="ventas-step-content">
           <h4><span class="ventas-step-number">1</span> - Estrategia de Marketing</h4>
           <p>Nuestro trabajo no es solo enseñar casas, sino también crear una estrategia de venta clara y efectiva. Definimos un plan SMART (específico, medible, alcanzable, realista y con plazos).</p>
-          <p>Preparamos un discurso atractivo que destaque lo que hace única tu propiedad.</p>
+          <p>Preparamos un discurso atractivo que destaque lo que hace única su propiedad.</p>
           <p>Nos apoyamos en contenidos profesionales:</p>
           <ul>
             <li>Fotos y vídeos de alta calidad.</li>
             <li>Material pensado para redes sociales y portales inmobiliarios.</li>
           </ul>
         </div>
-        <div class="ventas-step-media"><img src="${j}" alt="Marketing visual" loading="lazy"/></div>
+        <div class="ventas-step-media"><img src="${v}" alt="Marketing visual" loading="lazy"/></div>
       </article>
 
       <article class="ventas-step">
-        <div class="ventas-step-media"><img src="${k}" alt="Publicación y promoción" loading="lazy"/></div>
+        <div class="ventas-step-media"><img src="${b}" alt="Publicación y promoción" loading="lazy"/></div>
         <div class="ventas-step-content">
           <h4><span class="ventas-step-number">2</span> - Publicación y Promoción</h4>
-          <p>Una vez tengamos el material listo, publicamos y damos visibilidad de tu inmueble en:</p>
+          <p>Una vez tengamos el material listo, publicamos y damos visibilidad de su inmueble en:</p>
           <ul>
             <li>Web “X”: Se encuentra posicionada y actualizada. Contamos con nuestra propia red de compradores e interesados en comprar.</li>
             <li>Portales inmobiliarios: Idealista, Fotocasa, Resales, JamesEdition, etc.</li>
@@ -60,11 +59,11 @@ import{r as C,a as E}from"./Footer-Cr0BdTaO.js";/* empty css              */cons
             <li>Generamos sensación de exclusividad: esto nos hace únicos y diferenciadores.</li>
           </ul>
         </div>
-        <div class="ventas-step-media"><img src="${d}" alt="Visitas" loading="lazy"/></div>
+        <div class="ventas-step-media"><img src="${r}" alt="Visitas" loading="lazy"/></div>
       </article>
 
       <article class="ventas-step">
-        <div class="ventas-step-media"><img src="${z}" alt="Seguimiento y ajustes" loading="lazy"/></div>
+        <div class="ventas-step-media"><img src="${g}" alt="Seguimiento y ajustes" loading="lazy"/></div>
         <div class="ventas-step-content">
           <h4><span class="ventas-step-number">4</span> - Seguimiento y Ajustes</h4>
           <p>Si después de 2-3 meses no hay resultados, nos encargamos de analizar y ajustar factores clave:</p>
@@ -86,11 +85,7 @@ import{r as C,a as E}from"./Footer-Cr0BdTaO.js";/* empty css              */cons
             <li>Finalmente, acompañamos al propietario a notaría para el pago del 90 % restante y la entrega de llaves.</li>
           </ul>
         </div>
-        <div class="ventas-step-media"><img src="${u}" alt="Cierre" loading="lazy"/></div>
+        <div class="ventas-step-media"><img src="${o}" alt="Cierre" loading="lazy"/></div>
       </article>
     </section>
-  `;const i=document.createElement("div");i.className="comprar-images",i.innerHTML=`
-    <div class="comprar-image-block">
-      <img src="${d}" alt="Listado destacado" loading="lazy" class="comprar-image-large" />
-    </div>
-  `,s.appendChild(l),s.appendChild(i),n.appendChild(s);const p=()=>{try{const o=s,t=i.querySelector(".comprar-image-block"),c=t?t.querySelector(".comprar-image-large"):null;if(o&&t&&c){const m=getComputedStyle(o),h=parseFloat(m.paddingLeft||"0")||0,f=parseFloat(m.paddingRight||"0")||0,L=Math.max(0,o.clientWidth-h-f);t.style.width=L+"px",t.style.margin="0 auto",c.style.width="100%",c.style.maxWidth="100%"}}catch{}};setTimeout(p,50),window.addEventListener("resize",p),y&&e.parentNode?e.parentNode.insertBefore(a,e):e.appendChild(a),e.appendChild(n)}const v=document.createElement("div");document.body.prepend(v);C(v);function g(){const e=document.querySelector(".navbar");e&&(window.scrollY===0?(e.classList.add("navbar-transparent"),e.classList.remove("navbar-solid")):(e.classList.add("navbar-solid"),e.classList.remove("navbar-transparent")))}window.addEventListener("scroll",g);window.addEventListener("DOMContentLoaded",g);const r=document.createElement("div");r.id="app";document.body.appendChild(r);r.style.paddingTop="0";q(r,!0);const b=document.createElement("div");document.body.appendChild(b);E(b);
+  `,t.appendChild(i),s.appendChild(t),p&&e.parentNode?e.parentNode.insertBefore(a,e):e.appendChild(a),e.appendChild(s)}const l=document.createElement("div");document.body.prepend(l);m(l);function c(){const e=document.querySelector(".navbar");e&&(window.scrollY===0?(e.classList.add("navbar-transparent"),e.classList.remove("navbar-solid")):(e.classList.add("navbar-solid"),e.classList.remove("navbar-transparent")))}window.addEventListener("scroll",c);window.addEventListener("DOMContentLoaded",c);const n=document.createElement("div");n.id="app";document.body.appendChild(n);n.style.paddingTop="0";y(n,!0);const d=document.createElement("div");document.body.appendChild(d);u(d);
