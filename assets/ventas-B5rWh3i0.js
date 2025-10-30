@@ -1,4 +1,4 @@
-import{r as m,a as u}from"./Footer-28mFYU8r.js";/* empty css              */const o="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",v="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",b="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",r="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",g="/Lumiere-key/assets/ventas-5-Bpgl46GU.jpg";function y(e,p=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${o}')`,a.id="ventas-hero",a.innerHTML=`
+import{r as m,a as u}from"./Footer-DNQXhcrP.js";/* empty css              *//* empty css               */const o="/Lumiere-key/assets/ventas-1-Bm6cdYvO.jpg",v="/Lumiere-key/assets/ventas-2-DVhnbUBB.jpg",b="/Lumiere-key/assets/ventas-3-BrJYtxEs.jpg",r="/Lumiere-key/assets/ventas-4-DLrGYSBi.jpg",g="/Lumiere-key/assets/ventas-5-DX16i04N.jpg";function y(e,p=!1){e.innerHTML="";const a=document.createElement("section");a.className="comprar-hero",a.style.backgroundImage=`url('${o}')`,a.id="ventas-hero",a.innerHTML=`
     <div class="hero-inner">
       <h1>Venda su propiedad con Lumiere Key</h1>
       <p class="hero-sub">Sabemos que vender su hogar es una decisión importante. Permítanos acompañarle.</p>
@@ -40,8 +40,8 @@ import{r as m,a as u}from"./Footer-28mFYU8r.js";/* empty css              */cons
           <h4><span class="ventas-step-number">2</span> - Publicación y Promoción</h4>
           <p>Una vez tengamos el material listo, publicamos y damos visibilidad de su inmueble en:</p>
           <ul>
-            <li>Web “X”: Se encuentra posicionada y actualizada. Contamos con nuestra propia red de compradores e interesados en comprar.</li>
-            <li>Portales inmobiliarios: Idealista, Fotocasa, Resales, JamesEdition, etc.</li>
+            <li>Nuestra web se encuentra posicionada y actualizada. Contamos con nuestra propia red de compradores e interesados en comprar.</li>
+            <li>Portales inmobiliarios: Idealista, Fotocasa, Habitaclia, etc.</li>
             <li>CRM interno (Customer Relationship Management) para seguimiento de los clientes.</li>
           </ul>
           <p>Campañas digitales en: LinkedIn (inversores y profesionales), Facebook (público amplio) e Instagram (impacto visual).</p>
@@ -80,8 +80,8 @@ import{r as m,a as u}from"./Footer-28mFYU8r.js";/* empty css              */cons
           <h4><span class="ventas-step-number">5</span> - Cierre de la Venta</h4>
           <ul>
             <li>Cuando nos llegue una oferta: le informamos inmediatamente.</li>
-            <li>Aseguramos la firma del contrato de reserva (con depósito del comprador).</li>
-            <li>Contrato de arras: el comprador entrega 10% como señal (se guarda en la cuenta del abogado o notario).</li>
+            <li>Aseguramos la firma del contrato de reserva.</li>
+            <li>Contrato de arras: el comprador entrega 10% como señal.</li>
             <li>Finalmente, acompañamos al propietario a notaría para el pago del 90 % restante y la entrega de llaves.</li>
           </ul>
         </div>
