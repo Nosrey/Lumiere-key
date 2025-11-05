@@ -1,4 +1,5 @@
 import './style.css';
+import './viewport.ts';
 import './styles/fonts.css';
 import { renderNavbar } from './components/Navbar';
 import { renderVentas } from './pages/ventas';

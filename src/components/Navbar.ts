@@ -1,27 +1,28 @@
 import './Navbar.css';
 import logo from '../assets/logo.png';
+import { openModal } from './Modal';
 
 export function renderNavbar(container: HTMLElement) {
   container.innerHTML = `
     <nav class="navbar">
-      <div class="navbar-logo">
+      <a href="index.html" class="navbar-logo" aria-label="Ir a inicio">
         <img src="${logo}" alt="Lumiere Key logo" class="navbar-logo-image" />
         <span class="navbar-logo-text">
           <span>Lumiere</span>
           <span>Key</span>
         </span>
-      </div>
+      </a>
       <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span class="hamburger" aria-hidden="true"></span>
       </button>
       <ul class="navbar-menu">
-        <!-- Normal link navigation -->
-        <li data-route="home"><a href="/index.html">INICIO</a></li>
-        <li data-route="comprar"><a href="/comprar.html">COMPRAR</a></li>
-        <li data-route="ventas"><a href="/ventas.html">VENTAS</a></li>
-        <li data-route="about"><a href="/about.html">SOBRE NOSOTROS</a></li>
-        <li data-route="contacto"><a href="/contact.html">CONTACTO</a></li>
-        <li class="navbar-phone">+34 624 41 51 65</li>
+  <!-- Normal link navigation (use relative paths so dev and build both work) -->
+  <li data-route="home"><a href="index.html">INICIO</a></li>
+  <li data-route="comprar"><a href="comprar.html">COMPRAR</a></li>
+  <li data-route="ventas"><a href="ventas.html">VENTAS</a></li>
+  <li data-route="about"><a href="about.html">SOBRE NOSOTROS</a></li>
+  <li data-route="contacto"><a href="contact.html">CONTACTO</a></li>
+  <li class="navbar-phone"><a href="tel:+34624415165">+34 624 41 51 65</a></li>
       </ul>
     </nav>
   `;
@@ -91,8 +92,9 @@ export function renderNavbar(container: HTMLElement) {
           return;
         }
         ev.preventDefault();
-        // Use location.assign to keep navigation behaviour consistent
-        window.location.assign(a.href);
+        // Use the raw href attribute (relative) so navigation works with Vite base
+        const hrefAttr = a.getAttribute('href') || a.href;
+        window.location.assign(hrefAttr);
       });
     });
 
@@ -166,6 +168,63 @@ export function renderNavbar(container: HTMLElement) {
         toggle.setAttribute('aria-expanded', 'false');
         if (mq.matches) updateNavbarSolid();
       }
+    });
+
+    // --- Política de privacidad: abrir modal en click ---
+    const privacyHtml = `
+      <p><strong>Introducción</strong></p>
+      <p>En Lumiere Key ("nosotros", "nuestro") valoramos su privacidad. La presente Política de Privacidad explica qué datos recopilamos, con qué finalidad, la base legal para su tratamiento, cómo los protegemos y sus derechos en relación con esos datos.</p>
+
+      <h3>Datos que recopilamos</h3>
+      <p>Podemos recopilar y procesar los siguientes datos personales cuando usted interactúa con nuestro sitio o servicios:</p>
+      <ul>
+        <li>Datos de contacto: nombre, dirección de correo electrónico y teléfono cuando nos los facilita para consultas o contrataciones.</li>
+        <li>Datos de navegación: información técnica sobre su dispositivo y navegación (por ejemplo IP, tipo de navegador, páginas visitadas) recogida mediante cookies y registros del servidor.</li>
+        <li>Datos de transacción: información necesaria para procesar compras o servicios cuando proceda.</li>
+      </ul>
+
+      <h3>Finalidades y base legal</h3>
+      <p>Utilizamos sus datos para:</p>
+      <ul>
+        <li>Responder a sus consultas y prestar servicios solicitados (ejecución contractual).</li>
+        <li>Gestionar pedidos y facturación (ejecución contractual o interés legítimo).</li>
+        <li>Cumplir obligaciones legales (por ejemplo, contabilidad y fiscalidad).</li>
+        <li>Mejorar el sitio web y la experiencia de usuario mediante análisis (consentimiento o interés legítimo).</li>
+      </ul>
+
+      <h3>Cookies y tecnologías similares</h3>
+      <p>Usamos cookies para recordar preferencias, ofrecer funcionalidades y analizar el uso del sitio. Puede gestionar o deshabilitar cookies desde su navegador; tenga en cuenta que algunas funciones pueden dejar de estar disponibles.</p>
+
+      <h3>Cesión a terceros</h3>
+      <p>No venderemos sus datos personales. Podemos compartir información con proveedores que prestan servicios (por ejemplo, alojamiento, pasarelas de pago) siempre que garanticen un nivel adecuado de protección y cumplan con sus obligaciones contractuales.</p>
+
+      <h3>Seguridad</h3>
+      <p>Implementamos medidas técnicas y organizativas razonables para proteger sus datos frente a accesos no autorizados, pérdida o alteración.</p>
+
+      <h3>Conservación</h3>
+      <p>Conservaremos sus datos el tiempo necesario para las finalidades indicadas y para cumplir obligaciones legales. Los criterios de conservación incluyen la duración del servicio contratado, necesidades administrativas y plazos legales aplicables.</p>
+
+      <h3>Sus derechos</h3>
+      <p>Usted tiene derecho a solicitar acceso, rectificación, supresión, limitación del tratamiento, portabilidad y oposición al tratamiento de sus datos. Para ejercerlos, contacte con nosotros en <a href="mailto:contacto@lkbrokers.es">contacto@lkbrokers.es</a>. También puede presentar una reclamación ante la autoridad de control (por ejemplo, la AEPD en España).</p>
+
+      <h3>Cambios en la política</h3>
+      <p>Podemos actualizar esta política ocasionalmente. Publicaremos la versión vigente en nuestro sitio y, cuando proceda, le informaremos de cambios importantes.</p>
+
+      <p><em>Última actualización: octubre de 2025.</em></p>
+    `;
+
+    // Attach click handler to any element that has data-modal="privacy"
+    const modalTriggers = menu.querySelectorAll('[data-modal="privacy"]');
+    modalTriggers.forEach((el) => {
+      el.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        openModal({ title: 'Política de privacidad', html: privacyHtml });
+        // close mobile menu if open
+        if (menu.classList.contains('open')) {
+          menu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
     });
   }
 }

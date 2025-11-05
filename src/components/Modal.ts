@@ -25,16 +25,27 @@ function createBackdrop() {
   const body = document.createElement('div');
   body.className = 'modal-body';
 
+  // header (separate from scrollable body so it never gets overlapped)
+  const header = document.createElement('div');
+  header.className = 'lk-modal-header';
+
+  const titleEl = document.createElement('h2');
+  titleEl.className = 'lk-modal-title';
+  header.appendChild(titleEl);
+
   const close = document.createElement('button');
   close.className = 'modal-close';
   close.innerHTML = '✕';
   close.setAttribute('aria-label', 'Cerrar');
   close.title = 'Cerrar';
   close.addEventListener('click', () => closeModal());
+  header.appendChild(close);
 
+  modal.appendChild(header);
+  // Place media above the header/body so modal reads like a card: image, title, content
   modal.appendChild(media);
+  modal.appendChild(header);
   modal.appendChild(body);
-  modal.appendChild(close);
 
   backdrop.appendChild(modal);
 
@@ -70,12 +81,24 @@ export function openModal(opts: ModalOpts) {
     media.appendChild(img);
   }
 
+  // If there's no media content, add a helper class so CSS can collapse the media column
+  if (media.children.length === 0) {
+    modal.classList.add('no-media');
+  } else {
+    modal.classList.remove('no-media');
+  }
+
   // fill body
   body.innerHTML = '';
-  if (opts.title) {
-    const h2 = document.createElement('h2');
-    h2.textContent = opts.title;
-    body.appendChild(h2);
+  // set title into the dedicated header title element
+  const headerTitle = modal.querySelector('.lk-modal-title') as HTMLHeadingElement | null;
+  const headerEl = modal.querySelector('.lk-modal-header') as HTMLDivElement | null;
+  if (headerTitle) {
+    headerTitle.textContent = opts.title || '';
+    // hide header if no title provided
+    if (headerEl) {
+      if (!opts.title) headerEl.classList.add('no-title'); else headerEl.classList.remove('no-title');
+    }
   }
   if (opts.html) {
     const div = document.createElement('div');

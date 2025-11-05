@@ -1,5 +1,7 @@
 import './style.css';
+import './viewport.ts';
 import './styles/fonts.css';
+import './styles/ventas.css';
 import { renderNavbar } from './components/Navbar';
 import { renderComprar } from './pages/comprar';
 import { renderFooter } from './components/Footer';

@@ -60,7 +60,8 @@ body {
   flex-direction: column; /* apilar hero y main verticalmente */
   align-items: stretch;
   min-width: 320px;
-  min-height: 100vh;
+  /* Use JS-driven --vh to avoid iOS/Chrome mobile UI resize quirks */
+  min-height: calc(var(--vh) * 100);
   font-family: var(--font-body);
 }
 
@@ -83,7 +84,7 @@ h1 {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
   padding-bottom: 0; /* evita hueco entre contenido y footer */
   text-align: center;
 }
@@ -105,7 +106,11 @@ h1 {
   margin-left: calc(50% - 50vw);
   /* Add a subtle color overlay (10% opacity) over the background image so
      the hero has a consistent tint, plus keep the image behind it. */
-  background-image: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.10), rgba(var(--palette-deepBlue-rgb), 0.10)), url('./assets/header-1.gif');
+  /* Use a CSS variable for the hero background so JS can swap the GIF only when fully loaded.
+    Default (no image) avoids showing a partially-downloaded GIF frame-by-frame. If you prefer
+    to show a static poster while loading, set --hero-bg to url('./assets/header-1-poster.jpg')
+    in HTML or via JS before loading the full GIF. */
+  background-image: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.10), rgba(var(--palette-deepBlue-rgb), 0.10)), var(--hero-bg, none);
   background-size: cover; /* cover mantiene proporción sin deformar, recorta lo necesario */
   background-position: center center;
   background-attachment: fixed;
@@ -178,7 +183,7 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 35vh; /* ajustar a 5vh o 10vh si prefieres */
+  height: calc(var(--vh) * 35); /* use JS-driven vh for more stable results on mobile */
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(to top, rgba(var(--palette-deepBlue-rgb), 0.92) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 40%, rgba(var(--palette-deepBlue-rgb), 0.08) 75%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
@@ -191,7 +196,7 @@ h1 {
   left: 0;
   right: 0;
   top: 0;
-  height: 35vh; /* igual altura que ::after para simetría */
+  height: calc(var(--vh) * 35); /* equal to ::after — use JS-driven vh */
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.9) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 35%, rgba(var(--palette-deepBlue-rgb), 0.15) 65%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
@@ -295,7 +300,8 @@ h1 {
     /* reducir altura para evitar que CTAs queden fuera en móviles y evitar solapamiento
        con la navbar fija: usar min-height para permitir que el hero crezca si es necesario */
     height: auto;
-    min-height: calc(70vh - var(--navbar-height));
+    /* use JS-driven --vh to avoid mobile browser chrome changing the measured vh */
+    min-height: calc((var(--vh) * 70) - var(--navbar-height));
     padding-top: calc(var(--navbar-height) + 0.5rem);
   }
 }
@@ -315,6 +321,21 @@ h1 {
 
 .card {
   padding: 2em;
+}
+
+/* Utility: justify paragraph text inside page content containers.
+   Apply the `text-justify` class to a page container (e.g. .comprar-content-inner)
+   so only <p> and list items are justified while headings keep their alignment. */
+.text-justify p,
+.text-justify li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.text-justify p:last-child {
+  /* make the last line align left for a cleaner finish */
+  text-align-last: left;
 }
 
 /* Areas section debajo del hero */
@@ -378,6 +399,16 @@ h1 {
   margin: 0 auto 0.5rem auto;
   color: rgba(245,244,230,0.95);
 }
+
+/* Make only the trailer head description paragraph justified while keeping
+   the trailer header itself centered. This overrides the `.trailer-head`
+   centering without affecting other elements or global utilities. */
+.trailer-head .trailer-head-desc {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-align-last: left;
+}
 .trailer-wrap {
   max-width: 1200px;
   margin: 0 auto;
@@ -439,7 +470,7 @@ h1 {
   width: 100% !important;
   box-sizing: border-box !important;
   padding: 2rem 1rem 2rem 1rem !important;
-  padding-top: calc(var(--navbar-height) + 16px) !important;
+  padding-top: calc(var(--navbar-height) + 0px) !important;
   padding-left: 1rem !important;
   padding-bottom: 2rem !important;
   display: flex !important;
@@ -503,6 +534,35 @@ h1 {
     border-radius: 10px;
   }
 
+  /* Mobile centering & sizing: ensure the static poster is centered and scales
+     nicely on small screens. Use flex on the wrap and make the poster fill the
+     available width up to a comfortable max (720px). */
+  .trailer-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .trailer-poster {
+    width: 100%;
+    max-width: 720px; /* comfortable maximum on phones/tablets */
+    margin: -4rem auto 1.25rem auto; /* keep the intended overlap */
+    display: block;
+  }
+
+  .trailer-poster-bg {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 56.25%; /* keep 16:9 aspect ratio */
+    background-size: cover; /* cover looks better for posters on small screens */
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+  }
+
   /* Prefer modern aspect-ratio if available, fallback padding-top kept by default rules */
   .trailer-poster-bg {
     aspect-ratio: 16 / 9;
@@ -545,6 +605,42 @@ h1 {
   color: var(--palette-taupe);
   margin-bottom: 0.75rem;
 }
+
+/* Ensure the small subtitle in the areas block stays centered even when
+   the container uses the .text-justify utility which targets <p> elements. */
+.text-justify .areas-subtitle {
+  text-align: center;
+}
+
+/* Instead of altering .hero-inner, apply a subtle dark overlay to the
+   comprar hero background image so the image is slightly dimmed and the
+   text remains readable. This keeps all .hero-inner styling intact for
+   other pages (e.g. Ventas). */
+.comprar-hero#buy::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.32); /* slightly darken the background image */
+  z-index: 1;
+  pointer-events: none;
+}
+
+.comprar-hero#buy .hero-inner {
+  /* ensure the hero inner content sits above the overlay and keeps
+     its existing padding/structure from the global rules */
+  position: relative;
+  z-index: 2;
+  color: var(--palette-cream) !important; /* keep light text on dimmed image */
+}
+
+@media (max-width: 900px) {
+  .comprar-hero#buy::before {
+    background: rgba(0,0,0,0.44);
+  }
+}
 .areas-title {
   font-family: var(--font-title);
   font-size: 2.6rem;
@@ -554,8 +650,11 @@ h1 {
 .areas-desc {
   color: #333;
   max-width: 800px;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 1.5rem; /* center with bottom margin */
   line-height: 1.6;
+  /* add safe horizontal spacing on small viewports so the text doesn't touch the edges */
+  padding-inline: 1rem;
+  box-sizing: border-box;
 }
 .cta-outline {
   /* Use theme color for border and text so it remains visible over the
@@ -721,6 +820,35 @@ button:focus-visible {
   }
 }
 
+/* Homepage-specific spacing tweaks requested by user: reduce excessive space
+   above the "Proceso de publicación" title on mobile, and add more space
+   above the "Colección en exclusiva" subtitle on desktop and mobile. */
+.page-home .intro-inner {
+  /* pull the intro slightly up to remove extra gap coming from previous section */
+  margin-top: -1rem !important;
+}
+
+/* Make the subtitle "Colección en exclusiva" have additional top spacing */
+.intro-subtitle {
+  margin-top: 1.6rem !important;
+}
+
+@media (max-width: 600px) {
+  .page-home .intro-inner {
+    /* smaller negative pull on very small screens to avoid overlap */
+    margin-top: -0.5rem !important;
+  }
+  .intro-subtitle {
+    margin-top: 1.2rem !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .intro-subtitle {
+    margin-top: 2rem !important;
+  }
+}
+
 /* Styles for the Comprar section */
 .comprar-section {
   padding: 2rem;
@@ -764,6 +892,36 @@ button:focus-visible {
   padding-top: 0; /* remove extra padding so background reaches the very top */
 }
 
+/* Contact page: ensure the hero is never covered by the navbar. Unlike the
+   generic comprar hero (which is pulled under the navbar for a full-bleed
+   effect), the contact page should always sit below the navbar so its content
+   (buttons, headings) remain accessible. */
+.comprar-hero#contact-hero {
+  margin-top: 0 !important;
+  /* keep a safe padding so the inner content is pushed below the navbar */
+  padding-top: calc(var(--navbar-height) + 8px) !important;
+}
+
+/* Sobre nosotros page: ensure hero is pushed below the navbar like contact page
+   Use 0px extra so the section sits exactly below the navbar without extra gap. */
+.comprar-hero#about-hero {
+  margin-top: 0 !important;
+  padding-top: calc(var(--navbar-height) + 0px) !important;
+}
+
+/* Darken the hero overlays specifically for Contact and About pages so
+   text placed on top is more legible against bright backgrounds. These
+   override the generic comprar-hero gradients with heavier opacity. */
+.comprar-hero#contact-hero::before,
+.comprar-hero#about-hero::before {
+  background: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.98) 0%, rgba(var(--palette-deepBlue-rgb), 0.8) 35%, rgba(var(--palette-deepBlue-rgb), 0.28) 65%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
+.comprar-hero#contact-hero::after,
+.comprar-hero#about-hero::after {
+  background: linear-gradient(to top, rgba(var(--palette-deepBlue-rgb), 0.98) 0%, rgba(var(--palette-deepBlue-rgb), 0.8) 35%, rgba(var(--palette-deepBlue-rgb), 0.28) 70%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
+}
+
 .comprar-hero::after {
   /* bottom gradient overlay to create a subtle darkening near the bottom */
   content: '';
@@ -771,7 +929,7 @@ button:focus-visible {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 35vh;
+  height: calc(var(--vh) * 35);
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(to top, rgba(var(--palette-deepBlue-rgb), 0.92) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 40%, rgba(var(--palette-deepBlue-rgb), 0.08) 75%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
@@ -784,7 +942,7 @@ button:focus-visible {
   left: 0;
   right: 0;
   top: 0;
-  height: 35vh;
+  height: calc(var(--vh) * 35);
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(to bottom, rgba(var(--palette-deepBlue-rgb), 0.9) 0%, rgba(var(--palette-deepBlue-rgb), 0.6) 35%, rgba(var(--palette-deepBlue-rgb), 0.15) 65%, rgba(var(--palette-deepBlue-rgb), 0) 100%);
@@ -829,7 +987,7 @@ button:focus-visible {
 /* Desktop: ensure comprar hero has a sensible minimum height (45% of viewport) */
 @media (min-width: 900px) {
   .comprar-hero {
-    min-height: 45vh; /* allow growth but ensure a substantial hero on desktop */
+    min-height: calc(var(--vh) * 45); /* allow growth but use JS-driven vh for desktop/mobile consistency */
   }
 }
 
@@ -838,7 +996,7 @@ button:focus-visible {
    to the body when the home renderer runs. */
 @media (min-width: 900px) { 
   .page-home .hero {
-    min-height: 80vh;
+    min-height: calc(var(--vh) * 80);
     height: auto; /* let content grow beyond this if needed */
   }
 }
@@ -1065,7 +1223,7 @@ button:focus-visible {
 .comprar-body-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0rem;
   box-sizing: border-box;
 }
 
@@ -1087,6 +1245,24 @@ button:focus-visible {
 
 .contact-content {
   max-width: 100%;
+}
+
+/* Small wrapper for the contact intro to add lateral breathing room
+   across devices. Keeps text centered on wide screens but adds side
+   margins on narrow viewports. */
+.contact-intro {
+  margin: 0 1.5rem; /* side margins */
+  max-width: 980px; /* constrain width on very large screens */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left; /* keep intro text left-aligned for readability */
+  padding-top: 0.25rem;
+}
+
+@media (max-width: 600px) {
+  .contact-intro {
+    margin: 0 1rem; /* slightly smaller side margins on small screens */
+  }
 }
 
 .contact-info-section {
@@ -1114,9 +1290,36 @@ button:focus-visible {
 .contact-values h3 {
   font-family: var(--font-title);
   color: var(--color-primary);
-  font-size: 1.8rem;
+  /* Aumentado para mejor visibilidad en desktop y mobile */
+  font-size: 2.2rem;
   margin-bottom: 0.6rem;
   text-align: left;
+}
+
+/* Make the contact values title slightly smaller on very narrow screens but
+   still larger than previous value so it's readable on mobile. */
+@media (max-width: 600px) {
+  .contact-values h3 {
+    font-size: 1.9rem;
+  }
+}
+
+/* Strong override: make the "Nuestro compromiso con usted" heading clearly
+   larger and more prominent across all breakpoints. This rule is intentionally
+   specific and uses !important to win over other global heading resets. */
+body .contact-values h3 {
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  margin-bottom: 1rem !important;
+  color: var(--color-primary) !important;
+}
+
+@media (max-width: 600px) {
+  body .contact-values h3 {
+    font-size: 2.1rem !important;
+    line-height: 1.12 !important;
+  }
 }
 
 .contact-values p {
@@ -1129,6 +1332,8 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  /* small separation from the section heading above */
+  margin-top: 3rem !important;
 }
 
 .value-card {
@@ -1342,7 +1547,8 @@ button:focus-visible {
 .contact-text h4 {
   margin: 0 0 0.35rem 0;
   color: var(--color-primary);
-  font-size: 1.05rem;
+  /* ligeramente más grande para que los títulos de contacto destaquen */
+  font-size: 1.18rem;
   font-weight: 700;
   text-align: center; /* centrar títulos en las value-cards */
 }
@@ -1351,12 +1557,15 @@ button:focus-visible {
   color: rgba(47,48,45,0.9);
   line-height: 1.5;
   font-weight: 500;
+  /* un pelín más grande para mejorar legibilidad junto al título */
+  font-size: 1.02rem;
 }
 
 .contact-text a {
   color: var(--color-accent);
   text-decoration: none;
   font-weight: 700;
+  font-size: 1.02rem;
 }
 
 .contact-text a:hover {
@@ -1705,10 +1914,16 @@ button:focus-visible {
 }
 
 .about-mission h3 {
+  /* Make only the "Nuestra misión" heading use the requested title font and
+     H2 sizing while keeping paragraph styles intact elsewhere. */
   color: var(--color-primary);
   font-family: var(--font-title);
-  font-size: 2rem;
-  margin-bottom: 1.75rem;
+  font-size: var(--site-h2-size) !important;
+  line-height: 1.2 !important;
+  margin: 0 0 0.75rem 0 !important;
+  font-weight: 700 !important;
+  text-align: center;
+  letter-spacing: 0.4px;
 }
 
 .mission-lead {
@@ -1724,15 +1939,15 @@ button:focus-visible {
 }
 
 .mission-lead::first-letter {
-  /* Match the other large initial letter: use the script/title font, larger size and black color */
-  font-family: var(--font-initial);
-  font-size: 4rem;
-  line-height: 1;
-  margin-right: 0.8rem;
-  vertical-align: middle;
-  color: #000; /* black as requested */
-  float: left;
-  margin-top: 0.1rem;
+  /* Remove decorative drop-cap: keep the first letter visually identical to the rest of the paragraph */
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-right: 0;
+  vertical-align: baseline;
+  color: inherit;
+  float: none;
+  margin-top: 0;
 }
 
 /* Final override: when JS detects the H1 really overflows on desktop, remove ellipsis and allow
@@ -1762,6 +1977,19 @@ button:focus-visible {
   text-align: left;
   font-style: italic;
   opacity: 0.9;
+}
+
+/* Make the paragraphs under "Nuestra misión" share the same width and be justified.
+   We scope this to .about-mission to avoid affecting other pages. */
+.about-mission .mission-lead,
+.about-mission .mission-sub {
+  max-width: 820px; /* same readable measure used elsewhere */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-align-last: left;
 }
 
 /* Mobile styles for about page */
@@ -1799,20 +2027,127 @@ button:focus-visible {
   }
 
   .about-mission h3 {
-    font-size: 1.8rem;
+    /* Make the "Nuestra misión" heading visually match the main page title
+       (hero H1). We use the site's --site-h1-size variable so it responds
+       to the global heading scale and media queries. */
+    font-family: var(--font-title);
+    font-size: var(--site-h1-size) !important;
+    line-height: 1.12;
+    margin: 0 0 0.75rem 0;
+    font-weight: 700;
   }
 
   .mission-lead {
-    font-size: 1.1rem;
+   /* On mobile make the mission lead match the mission-sub paragraph:
+     same font size, line-height and weight so both paragraphs appear
+     consistent and justified. */
+   font-family: var(--font-body) !important;
+   font-size: 1rem !important;
+   line-height: 1.6 !important;
+   margin: 0 0 0.6rem 0 !important;
+   font-weight: 400 !important;
+   color: var(--text) !important;
   }
 
   .mission-lead::first-letter {
-    font-size: 3rem;
-    margin-right: 0.6rem;
+    /* ensure no large initial on small screens either */
+    font-size: inherit;
+    margin-right: 0;
   }
 
   .mission-sub {
     font-size: 1rem;
+  }
+}
+
+/* ==================================================
+   Normalize heading sizes across the site
+   (user requested consistent H1 / H2 / H3 across pages)
+   These variables can be tuned for overall scale. We use
+   !important so these rules win over specific page/hero overrides.
+   ================================================== */
+:root {
+  --site-h1-size: 2.4rem; /* adjust to taste */
+  --site-h2-size: 1.6rem;
+  --site-h3-size: 1.2rem;
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: var(--site-h1-size) !important;
+  line-height: 1.12 !important;
+  margin: 0 0 0.9rem 0 !important;
+  font-weight: 700 !important;
+}
+
+h2 {
+  font-family: var(--font-title);
+  font-size: var(--site-h2-size) !important;
+  line-height: 1.2 !important;
+  margin: 0 0 0.75rem 0 !important;
+  font-weight: 700 !important;
+}
+
+h3 {
+  font-family: var(--font-title);
+  font-size: var(--site-h3-size) !important;
+  line-height: 1.25 !important;
+  margin: 0 0 0.6rem 0 !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 600px) {
+  /* scale down headings slightly on small screens for better fit */
+  :root {
+    --site-h1-size: 1.9rem;
+    --site-h2-size: 1.35rem;
+    --site-h3-size: 1.05rem;
+  }
+}
+
+/* ==================================================
+   Viewport fixes for mobile (iOS Safari / mobile Chrome)
+   - Use JS to set --vh and --vw. Where precise viewport height is required
+     use calc(var(--vh) * N) instead of Nvh.
+   - Avoid forcing full-bleed via 100vw on small screens; switch to 100% to
+     prevent horizontal scroll issues on some mobile browsers.
+   ==================================================*/
+:root {
+  /* CSS fallback if JS hasn't run yet */
+  --vh: 1vh;
+  --vw: 1vw;
+}
+
+@media (max-width: 820px) {
+  /* Convert full-bleed techniques to normal flow on small screens to avoid
+     horizontal shifts caused by 100vw including browser chrome or safe-area */
+  .hero,
+  .hero-content,
+  .intro-section,
+  .comprar-hero,
+  .comprar-body,
+  .comprar-body-inner,
+  .trailer-wrap,
+  .trailer-poster,
+  .trailer-poster-bg {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    left: auto !important;
+    right: auto !important;
+  }
+
+  /* Use the JS-driven --vh for overlays and hero sizing to keep things stable */
+  .hero::after,
+  .hero::before,
+  .comprar-hero::after,
+  .comprar-hero::before {
+    height: calc(var(--vh) * 35) !important;
+  }
+
+  .hero,
+  .comprar-hero {
+    min-height: calc((var(--vh) * 70) - var(--navbar-height)) !important;
   }
 }
 

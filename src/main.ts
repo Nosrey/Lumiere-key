@@ -1,8 +1,10 @@
 import './style.css';
+import './viewport.ts';
 import { renderNavbar } from './components/Navbar';
 import { renderHome } from './pages/home';
 // Import assets so Vite resolves the correct URLs for dev and build
 import trailerPoster from './assets/trailer-poster.jpg';
+import headerGif from './assets/header-1.gif';
 import { renderFooter } from './components/Footer';
 
 // Crear contenedor para el navbar
@@ -31,11 +33,11 @@ const hero = document.createElement('section');
 hero.className = 'hero';
 hero.innerHTML = `
   <div class="hero-content">
-    <h1>Vive el lujo en Aragón</h1>
+    <h1>Viva el lujo en Aragón</h1>
     <div class="hero-cta">
       <button class="btn-cta">Propiedades en Zaragoza</button>
       <button class="btn-cta">Residencias de montaña</button>
-      <button class="btn-cta">Vendemos tu propiedad</button>
+      <button class="btn-cta">Vendemos su propiedad</button>
     </div>
   </div>
 `;
@@ -45,6 +47,28 @@ if (appElement && appElement.parentNode) {
   document.body.insertBefore(hero, appElement);
 } else {
   document.body.appendChild(hero);
+}
+
+// Preload the hero GIF and only set it as the background when fully loaded.
+// This avoids the browser rendering partial frames while the GIF downloads.
+// When the image is ready we set a CSS variable (--hero-bg) which is used by
+// the hero styles (see src/style.css).
+try {
+  const _heroPreloader = new Image();
+  _heroPreloader.src = headerGif;
+  _heroPreloader.onload = () => {
+    try {
+      hero.style.setProperty('--hero-bg', `url('${headerGif}')`);
+      // Optional: add a class for any transitions, if desired
+      hero.classList.add('hero--gif-ready');
+    } catch (e) {
+      // non-fatal; keep the default background
+      // console.warn('Failed to apply hero gif background', e);
+    }
+  };
+  // You can also handle _heroPreloader.onerror to fallback to a poster if needed.
+} catch (err) {
+  // ignore preload failures — page will render without animated background
 }
 
 // Crear contenedor para el contenido principal (#app) y rellenarlo usando el renderer de la página
@@ -59,10 +83,10 @@ if (app) {
 const areasSection = document.createElement('section');
 areasSection.className = 'areas-section';
 areasSection.innerHTML = `
-  <div class="areas-inner">
+  <div class="areas-inner text-justify">
     <p class="areas-subtitle">La ubicación es clave</p>
-  <h2 class="areas-title lead">Descubra las <strong>mejores zonas de Aragón</strong> para vivir de lujo</h2>
-    <p class="areas-desc">En Aragón compra tiempo, espacio y calma. Zaragoza destaca por su excelente comunicación con grandes ciudades como Madrid y Barcelona, y sus alrededores —Benasque, el valle de Tena, Ordesa y Monte Perdido— ofrecen impresionantes vistas y propiedades exclusivas en entornos de montaña.</p>
+  <h2 class="areas-title lead">Descubra las mejores zonas de Aragón.</h2>
+    <p class="areas-desc">En Aragón se compra la tierra y por ende el tiempo, el espacio y la calma. Zaragoza destaca por su excelente comunicación con grandes ciudades como Madrid y Barcelona, y sus alrededores como el valle de Tena, Ordesa y Monte Perdido, ofrece impresionantes vistas y propiedades exclusivas en entornos de montaña.</p>
     <button class="cta-outline">EXPLORAR ZONAS</button>
   </div>
 `;
@@ -120,7 +144,7 @@ videoSection.innerHTML = `
   <div class="trailer-head">
     <p class="trailer-head-subtitle">Lumiere Key</p>
     <h2 class="trailer-head-title">Transformando el mercado inmobiliario en Aragón</h2>
-  <p class="trailer-head-desc text-center mb-0">En Lumiere Key hemos transformado la forma de adquirir, vender e invertir en propiedades exclusivas en Aragón. Como una agencia joven y en constante expansión, nos enfocamos tanto en el mercado inmobiliario premium como en el dinámico estilo de vida que ofrece esta región. A través de estrategias de marketing innovadoras y un trato completamente personalizado, garantizamos que cada experiencia inmobiliaria en Aragón sea única y excepcional.</p>
+  <p class="trailer-head-desc text-justify mb-0">En Lumiere Key hemos transformado la forma de adquirir, vender e invertir en propiedades exclusivas en Aragón. Como una agencia joven y en constante expansión, nos enfocamos tanto en el mercado inmobiliario premium como en el dinámico estilo de vida que ofrece esta región. A través de estrategias de marketing innovadoras y un trato completamente personalizado, garantizamos que cada experiencia inmobiliaria en Aragón sea única y excepcional.</p>
   </div>
   <div class="trailer-wrap">
     <div class="trailer-poster" data-playing="false" aria-hidden="false">

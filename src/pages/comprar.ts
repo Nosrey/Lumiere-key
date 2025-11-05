@@ -21,7 +21,7 @@ export function renderComprar(app: HTMLDivElement, mountHeroOutside = false) {
       <h1>¿Sueña con tener una propiedad en Zaragoza?</h1>
       <p class="hero-sub">Nuestras propiedades de lujo y residencias exclusivas te esperan.</p>
       <div class="hero-cta">
-        <button class="btn-primary contact-button">Contáctanos</button>
+        <button class="btn-primary contact-button">Contáctenos</button>
         <button class="btn-outline">Explorar listados</button>
       </div>
     </div>
@@ -37,12 +37,14 @@ export function renderComprar(app: HTMLDivElement, mountHeroOutside = false) {
   innerContainer.className = 'container comprar-body-inner';
 
   const contentInner = document.createElement('div');
-  contentInner.className = 'comprar-content-inner';
+  // justify paragraph text on the comprar (buy) page
+  contentInner.className = 'comprar-content-inner text-justify';
   contentInner.innerHTML = `
-    <h2 class="lead">Tu tranquilidad es nuestra prioridad</h2>
-    <p>Nuestros listados ofrecen una amplia gama de propiedades de lujo de alta gama, excepcionales como casas de vacaciones o residencia. Tu tranquilidad es nuestra prioridad.</p>
-    <h3>¿Estás pensando en vender antes de comprar?</h3>
-    <p>Si necesitas vender tu vivienda actual antes de adquirir la próxima, nos ocupamos de todo por ti. Consulta nuestra Guía de Venta para descubrir consejos útiles e información esencial sobre el proceso, y ponte en contacto con nosotros para dar el primer paso. Nuestro equipo de profesionales se encargará de que la transacción sea ágil y sin complicaciones, ayudándote a avanzar con seguridad hacia tu nuevo hogar.</p>
+  <h2 class="lead">Su tranquilidad es nuestra prioridad</h2>
+  <p>Nuestros listados ofrecen una amplia gama de propiedades de lujo de alta gama, excepcionales como casas de vacaciones o residencia. Su tranquilidad es nuestra prioridad.</p>
+    <!-- Inline style with !important to override global/media-query rules that reduce h3 size -->
+    <h3 class="comprar-spaced" style="font-size:2.2rem !important; line-height:1.15 !important; font-weight:700 !important;">¿Está pensando en vender antes de comprar?</h3>
+    <p>Si necesita vender su vivienda actual antes de adquirir la próxima, nos ocupamos de todo por usted. Consulte nuestra Guía de Venta para descubrir consejos útiles e información esencial sobre el proceso, y póngase en contacto con nosotros para dar el primer paso. Nuestro equipo de profesionales se encargará de que la transacción sea ágil y sin complicaciones, ayudándole a avanzar con seguridad hacia su nuevo hogar.</p>
   `;
 
   // Listings rendered as cards with image, meta and CTA

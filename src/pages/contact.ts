@@ -18,7 +18,7 @@ export function renderContact(app: HTMLDivElement, mountHeroOutside = false) {
       <h1>Contacto</h1>
       <p class="hero-sub">Explorar el mercado inmobiliario en Aragón puede resultar todo un reto, pero nuestro equipo profesional está preparado para hacer que su búsqueda sea sencilla y sin complicaciones.</p>
       <div class="hero-cta">
-        <button class="btn-primary contact-button" onclick="document.querySelector('.contact-info-section').scrollIntoView({behavior: 'smooth'})">Contáctanos ahora</button>
+        <button class="btn-primary contact-button" onclick="document.querySelector('.contact-info-section').scrollIntoView({behavior: 'smooth'})">Contáctenos ahora</button>
       </div>
     </div>
   `;
@@ -32,7 +32,8 @@ export function renderContact(app: HTMLDivElement, mountHeroOutside = false) {
   innerContainer.className = 'container comprar-body-inner';
 
   const contentInner = document.createElement('div');
-  contentInner.className = 'comprar-content-inner contact-content';
+  // justify paragraphs within the contact page content
+  contentInner.className = 'comprar-content-inner contact-content text-justify';
   contentInner.innerHTML = `
     <section class="contact-intro">
       <h2 class="lead">Su tranquilidad es nuestra prioridad</h2>
@@ -58,7 +59,7 @@ export function renderContact(app: HTMLDivElement, mountHeroOutside = false) {
             </div>
             <div class="contact-text">
               <h4>Lumiere Key</h4>
-              <p>Su socio inmobiliario de confianza en Aragón</p>
+              <p>Su socio inmobiliario de Aragón</p>
             </div>
           </div>
           <div class="contact-item">
@@ -70,7 +71,7 @@ export function renderContact(app: HTMLDivElement, mountHeroOutside = false) {
             </div>
             <div class="contact-text">
               <h4>Teléfono</h4>
-              <p><a href="tel:+34624415165">+34 624 41 51 65</a></p>
+              <p><a href="tel:+34624415165">+34 624 41 51 65 - Kevin Leyva</a></p>
             </div>
           </div>
           <div class="contact-item">

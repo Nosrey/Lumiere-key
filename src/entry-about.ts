@@ -1,3 +1,4 @@
+import './viewport.ts';
 import { renderNavbar } from './components/Navbar';
 import { renderAbout } from './pages/about';
 import { renderFooter } from './components/Footer';
